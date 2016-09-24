@@ -1,0 +1,601 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="puppet," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="puppet master及agent配置文件简介。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="puppet的使用：puppet配置文件介绍">
+<meta property="og:url" content="http://yoursite.com/2016/05/08/puppet的使用：puppet配置文件介绍/index.html">
+<meta property="og:site_name" content="我的自白书">
+<meta property="og:description" content="puppet master及agent配置文件简介。">
+<meta property="og:updated_time" content="2016-05-24T14:51:42.181Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="puppet的使用：puppet配置文件介绍">
+<meta name="twitter:description" content="puppet master及agent配置文件简介。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> puppet的使用：puppet配置文件介绍 | 我的自白书 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">我的自白书</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">寻找自己</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                puppet的使用：puppet配置文件介绍
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-08T16:59:08+08:00" content="2016-05-08">
+              2016-05-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>puppet master及agent配置文件简介。</p>
+<a id="more"></a>
+<h2 id="配置文件的产生"><a href="#配置文件的产生" class="headerlink" title="配置文件的产生"></a>配置文件的产生</h2><p>Puppet安装完后，配置文件就产生了，名称为puppet.conf，一般在/etc/puppet路径下。<br>master也可以通过命令：<br>puppet master –genconfig &gt; puppet.conf<br>产生。<br>agent可以通过命令：<br>puppet agent –genconfig &gt; puppet.conf<br>产生。</p>
+<p>puppet配置文件一般包括main、master、agent这几个小节。</p>
+<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><p>全局配置。<br>[main]<br>    logdir=/var/log/puppet<br>    vardir=/var/lib/puppet<br>    ssldir=/var/lib/puppet/ssl<br>    rundir=/var/run/puppet<br>    factpath=$vardir/lib/facter<br>    templatedir=$confdir/templates<br>    server=puppet.example.com<br>一般只需要修改server即可，server一般是master的hostname，同时也要在agent的/etc/hosts中配置。</p>
+<p><strong>master和agent的配置项太多，下面只是简单的罗列出来了，只把重要的几个配置项含义列了下，其他的可以参考对应的英文说明，通过前面命令生成的配置文件都会有对应配置项含义的说明</strong></p>
+<p><em>agent和master默认的监听端口都是8140，如果在一台机器上master和agent都要起，需要修改其中一个的端口</em></p>
+<h3 id="master"><a href="#master" class="headerlink" title="master"></a>master</h3><p>[master]<br>    confdir = /etc/puppet #配置文件路径<br>    vardir = /var/lib/puppet #puppet数据的存放位置<br>    name = master<br>    logdir = /var/lib/puppet/log<br>    statedir = /var/lib/puppet/state<br>    rundir = /var/lib/puppet/run<br>    libdir = /var/lib/puppet/lib<br>    route_file = /etc/puppet/routes.yaml<br>    node_terminus = plain<br>    node_cache_terminus = write_only_yaml<br>    data_binding_terminus = hiera<br>    hiera_config = /etc/puppet/hiera.yaml<br>    catalog_terminus = compiler<br>    facts_terminus = yaml<br>    inventory_terminus = yaml<br>    default_file_terminus = rest<br>    httplog = /var/lib/puppet/log/http.log<br>    http_keepalive_timeout = 4<br>    filetimeout = 15<br>    environment_timeout = 0<br>    immutable_node_data = false<br>    preview_outputdir = /var/lib/puppet/preview<br>    csr_attributes = /etc/puppet/csr_attributes.yaml<br>    certdir = /etc/puppet/ssl/certs<br>    ssldir = /etc/puppet/ssl #ssl文件的存放位置，一般无需改动<br>    publickeydir = /etc/puppet/ssl/public_keys<br>    requestdir = /etc/puppet/ssl/certificate_requests<br>    privatekeydir = /etc/puppet/ssl/private_keys<br>    privatedir = /etc/puppet/ssl/private<br>    passfile = /etc/puppet/ssl/private/password<br>    hostcsr = /etc/puppet/ssl/csr_cuimiemie.pem<br>    hostcert = /etc/puppet/ssl/certs/cuimiemie.pem<br>    hostprivkey = /etc/puppet/ssl/private_keys/cuimiemie.pem<br>    hostpubkey = /etc/puppet/ssl/public_keys/cuimiemie.pem<br>    localcacert = /etc/puppet/ssl/certs/ca.pem<br>    hostcrl = /etc/puppet/ssl/crl.pem<br>    certificate_expire_warning = 5184000<br>    plugindest = /var/lib/puppet/lib<br>    pluginsource = puppet://puppet/plugins<br>    pluginfactdest = /var/lib/puppet/facts.d<br>    pluginfactsource = puppet://puppet/pluginfacts<br>    factpath = /var/lib/puppet/lib/facter:/var/lib/puppet/facts<br>    module_working_dir = /var/lib/puppet/puppet-module<br>    module_skeleton_dir = /var/lib/puppet/puppet-module/skeleton<br>    ca_name = Puppet CA: cuimiemie<br>    cadir = /etc/puppet/ssl/ca<br>    cacert = /etc/puppet/ssl/ca/ca_crt.pem<br>    cakey = /etc/puppet/ssl/ca/ca_key.pem<br>    capub = /etc/puppet/ssl/ca/ca_pub.pem<br>    cacrl = /etc/puppet/ssl/ca/ca_crl.pem<br>    capub = /etc/puppet/ssl/ca/ca_pub.pem<br>    cacrl = /etc/puppet/ssl/ca/ca_crl.pem<br>    caprivatedir = /etc/puppet/ssl/ca/private<br>    csrdir = /etc/puppet/ssl/ca/requests<br>    signeddir = /etc/puppet/ssl/ca/signed #这里会记录以前发的客户端，一般名称为agentHostname.pem<br>    capass = /etc/puppet/ssl/ca/private/ca.pass<br>    serial = /etc/puppet/ssl/ca/serial<br>    autosign = /etc/puppet/autosign.conf #用于控制是否自动签发，默认是false<br>    ca_ttl = 157680000<br>    cert_inventory = /etc/puppet/ssl/ca/inventory.txt<br>    config = /etc/puppet/puppet.conf<br>    pidfile = /var/lib/puppet/run/master.pid<br>    manifestdir = /etc/puppet/manifests<br>    manifest = /etc/puppet/manifests/site.pp<br>    masterlog = /var/lib/puppet/log/puppetmaster.log<br>    masterhttplog = /var/lib/puppet/log/masterhttp.log<br>    bucketdir = /var/lib/puppet/bucket<br>    rest_authconfig = /etc/puppet/auth.conf<br>    basemodulepath = /etc/puppet/modules:/usr/share/puppet/modules<br>    modulepath = /etc/puppet/modules:/usr/share/puppet/modules #模块文件的存放路径<br>    yamldir = /var/lib/puppet/yaml<br>    server_datadir = /var/lib/puppet/server_data<br>    reportdir = /var/lib/puppet/reports<br>    fileserverconfig = /etc/puppet/fileserver.conf<br>    storeconfigs_backend = active_record<br>    rrddir = /var/lib/puppet/rrd<br>    rrdinterval = 1800<br>    devicedir = /var/lib/puppet/devices<br>    deviceconfig = /etc/puppet/device.conf<br>    node_name_value = cuimiemie<br>    localconfig = /var/lib/puppet/state/localconfig<br>    statefile = /var/lib/puppet/state/state.yaml<br>    clientyamldir = /var/lib/puppet/client_yaml<br>    client_datadir = /var/lib/puppet/client_data<br>    classfile = /var/lib/puppet/state/classes.txt<br>    resourcefile = /var/lib/puppet/state/resources.txt<br>    puppetdlog = /var/lib/puppet/log/puppetd.log<br>    runinterval = 1800<br>    ca_server = puppet<br>    ca_port = 8140<br>    agent_catalog_run_lockfile = /var/lib/puppet/state/agent_catalog_run.lock<br>    agent_disabled_lockfile = /var/lib/puppet/state/agent_disabled.lock<br>    splaylimit = 1800<br>    clientbucketdir = /var/lib/puppet/clientbucket<br>    configtimeout = 120<br>    report_server = puppet<br>    report_port = 8140<br>    inventory_server = puppet<br>    inventory_port = 8140<br>    lastrunfile = /var/lib/puppet/state/last_run_summary.yaml<br>    lastrunreport = /var/lib/puppet/state/last_run_report.yaml</p>
+<h3 id="agent"><a href="#agent" class="headerlink" title="agent"></a>agent</h3><p>[agent]<br>    confdir = /etc/puppet<br>    vardir = /var/lib/puppet<br>    name = agent<br>    logdir = /var/lib/puppet/log<br>    statedir = /var/lib/puppet/state<br>    rundir = /var/lib/puppet/run<br>    libdir = /var/lib/puppet/lib<br>    route_file = /etc/puppet/routes.yaml<br>    node_terminus = rest<br>    data_binding_terminus = hiera<br>    hiera_config = /etc/puppet/hiera.yaml<br>    catalog_terminus = rest<br>    catalog_cache_terminus = json<br>    facts_terminus = facter<br>    inventory_terminus = facter<br>    default_file_terminus = rest<br>    httplog = /var/lib/puppet/log/http.log<br>    http_keepalive_timeout = 4<br>    filetimeout = 15<br>    environment_timeout = 0<br>    immutable_node_data = false<br>    preview_outputdir = /var/lib/puppet/preview<br>    csr_attributes = /etc/puppet/csr_attributes.yaml<br>    certdir = /etc/puppet/ssl/certs<br>    ssldir = /etc/puppet/ssl<br>    publickeydir = /etc/puppet/ssl/public_keys<br>    requestdir = /etc/puppet/ssl/certificate_requests<br>    privatekeydir = /etc/puppet/ssl/private_keys<br>    privatedir = /etc/puppet/ssl/private<br>    passfile = /etc/puppet/ssl/private/password<br>    hostcsr = /etc/puppet/ssl/csr_cuimiemie.pem<br>    hostcert = /etc/puppet/ssl/certs/cuimiemie.pem<br>    hostprivkey = /etc/puppet/ssl/private_keys/cuimiemie.pem<br>    hostpubkey = /etc/puppet/ssl/public_keys/cuimiemie.pem<br>    localcacert = /etc/puppet/ssl/certs/ca.pem<br>    hostcrl = /etc/puppet/ssl/crl.pem<br>    certificate_expire_warning = 5184000<br>    plugindest = /var/lib/puppet/lib<br>    pluginsource = puppet://puppet/plugins<br>    pluginfactdest = /var/lib/puppet/facts.d<br>    pluginfactsource = puppet://puppet/pluginfacts<br>    factpath = /var/lib/puppet/lib/facter:/var/lib/puppet/facts<br>    module_working_dir = /var/lib/puppet/puppet-module<br>    module_skeleton_dir = /var/lib/puppet/puppet-module/skeleton<br>    ca_name = Puppet CA: cuimiemie<br>    cadir = /etc/puppet/ssl/ca<br>    cacert = /etc/puppet/ssl/ca/ca_crt.pem<br>    cakey = /etc/puppet/ssl/ca/ca_key.pem<br>    capub = /etc/puppet/ssl/ca/ca_pub.pem<br>    cacrl = /etc/puppet/ssl/ca/ca_crl.pem<br>    caprivatedir = /etc/puppet/ssl/ca/private<br>    csrdir = /etc/puppet/ssl/ca/requests<br>    signeddir = /etc/puppet/ssl/ca/signed<br>    capass = /etc/puppet/ssl/ca/private/ca.pass<br>    serial = /etc/puppet/ssl/ca/serial<br>    autosign = /etc/puppet/autosign.conf<br>    ca_ttl = 157680000<br>    cert_inventory = /etc/puppet/ssl/ca/inventory.txt<br>    config = /etc/puppet/puppet.conf<br>    pidfile = /var/lib/puppet/run/agent.pid<br>    manifestdir = /etc/puppet/manifests<br>    manifest = /etc/puppet/manifests/site.pp<br>    masterlog = /var/lib/puppet/log/puppetmaster.log<br>    masterhttplog = /var/lib/puppet/log/masterhttp.log<br>    bucketdir = /var/lib/puppet/bucket<br>    rest_authconfig = /etc/puppet/auth.conf<br>    basemodulepath = /etc/puppet/modules:/usr/share/puppet/modules<br>    modulepath = /etc/puppet/modules:/usr/share/puppet/modules<br>    yamldir = /var/lib/puppet/yaml<br>    server_datadir = /var/lib/puppet/server_data<br>    reportdir = /var/lib/puppet/reports<br>    fileserverconfig = /etc/puppet/fileserver.conf<br>    storeconfigs_backend = active_record<br>    rrddir = /var/lib/puppet/rrd<br>    rrdinterval = 1800<br>    devicedir = /var/lib/puppet/devices<br>    deviceconfig = /etc/puppet/device.conf<br>    node_name_value = cuimiemie<br>    localconfig = /var/lib/puppet/state/localconfig<br>    statefile = /var/lib/puppet/state/state.yaml<br>    clientyamldir = /var/lib/puppet/client_yaml<br>    client_datadir = /var/lib/puppet/client_data<br>    classfile = /var/lib/puppet/state/classes.txt<br>    resourcefile = /var/lib/puppet/state/resources.txt<br>    puppetdlog = /var/lib/puppet/log/puppetd.log<br>    runinterval = 1800 #这个时间是客户端主动向master请求数据的时间间隔，单位默认是s<br>    ca_server = puppet<br>    ca_port = 8140<br>    agent_catalog_run_lockfile = /var/lib/puppet/state/agent_catalog_run.lock<br>    agent_disabled_lockfile = /var/lib/puppet/state/agent_disabled.lock<br>    splaylimit = 1800<br>    clientbucketdir = /var/lib/puppet/clientbucket<br>    configtimeout = 120<br>    report_server = puppet<br>    report_port = 8140 #客户端监听的端口号，一般也无需改动<br>    inventory_server = puppet<br>    inventory_port = 8140<br>    lastrunfile = /var/lib/puppet/state/last_run_summary.yaml<br>    lastrunreport = /var/lib/puppet/state/last_run_report.yaml<br>    graphdir = /var/lib/puppet/state/graphs<br>    waitforcert = 120<br>    archive_file_server = puppet<br>    tagmap = /etc/puppet/tagmail.conf<br>    dblocation = /var/lib/puppet/state/clientconfigs.sqlite3<br>    railslog = /var/lib/puppet/log/rails.log<br>    templatedir = /var/lib/puppet/templates</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixinpay.png" alt="崔咩咩 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/puppet/" rel="tag">#puppet</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/08/puppet的使用：安装/" rel="next" title="puppet的使用：安装puppet">
+                <i class="fa fa-chevron-left"></i> puppet的使用：安装puppet
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/08/puppet的使用：一个简单的例子/" rel="prev" title="puppet的使用：puppet的hello world">
+                puppet的使用：puppet的hello world <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="崔咩咩" />
+          <p class="site-author-name" itemprop="name">崔咩咩</p>
+          <p class="site-description motion-element" itemprop="description">有时迷茫，不停思考，持续成长</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件的产生"><span class="nav-number">1.</span> <span class="nav-text">配置文件的产生</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#main"><span class="nav-number">1.1.</span> <span class="nav-text">main</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#master"><span class="nav-number">1.2.</span> <span class="nav-text">master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#agent"><span class="nav-number">1.3.</span> <span class="nav-text">agent</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔咩咩</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

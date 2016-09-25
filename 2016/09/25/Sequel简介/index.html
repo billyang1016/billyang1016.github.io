@@ -1,0 +1,721 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="### 
+模型实例由主键标识。
+Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports chainability，意思应该是关联），使你能够通过简洁灵活的Ruby DSL来方便的获取数据。title: Sequel简介date: 2016-09-25 13:20:39tags:
+
+技术categories:
+ruby
+
+
+Sequel REA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的自白书">
+<meta property="og:url" content="http://yoursite.com/2016/09/25/Sequel简介/index.html">
+<meta property="og:site_name" content="我的自白书">
+<meta property="og:description" content="### 
+模型实例由主键标识。
+Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports chainability，意思应该是关联），使你能够通过简洁灵活的Ruby DSL来方便的获取数据。title: Sequel简介date: 2016-09-25 13:20:39tags:
+
+技术categories:
+ruby
+
+
+Sequel REA">
+<meta property="og:updated_time" content="2016-09-25T12:43:02.350Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我的自白书">
+<meta name="twitter:description" content="### 
+模型实例由主键标识。
+Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports chainability，意思应该是关联），使你能够通过简洁灵活的Ruby DSL来方便的获取数据。title: Sequel简介date: 2016-09-25 13:20:39tags:
+
+技术categories:
+ruby
+
+
+Sequel REA">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title>  | 我的自白书 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">我的自白书</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">寻找自己</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-25T13:20:39+08:00" content="2016-09-25">
+              2016-09-25
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>### </p>
+<p>模型实例由主键标识。</p>
+<h2 id="Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports-chainability，意思应该是关联），使你能够通过简洁灵活的Ruby-DSL来方便的获取数据。"><a href="#Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports-chainability，意思应该是关联），使你能够通过简洁灵活的Ruby-DSL来方便的获取数据。" class="headerlink" title="Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports chainability，意思应该是关联），使你能够通过简洁灵活的Ruby DSL来方便的获取数据。"></a>Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports chainability，意思应该是关联），使你能够通过简洁灵活的Ruby DSL来方便的获取数据。</h2><p>title: Sequel简介<br>date: 2016-09-25 13:20:39<br>tags:</p>
+<ul>
+<li>技术<br>categories:</li>
+<li>ruby</li>
+</ul>
+<hr>
+<p>Sequel README翻译。<br><a id="more"></a></p>
+<h1 id="Sequel-Ruby数据库工具包"><a href="#Sequel-Ruby数据库工具包" class="headerlink" title="Sequel: Ruby数据库工具包"></a>Sequel: Ruby数据库工具包</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Sequel是Ruby中用于访问SQL数据库的一个简单、灵活、强大的工具包。</p>
+<ul>
+<li>Sequel能够保证线程安全，提供了连接池功能以及简洁的SDL用于创建SQL查询及表定义；</li>
+<li>Sequel包括一个强大的ORM层用于映射数据库记录和Ruby对象以及相关的记录；</li>
+<li>Sequel提供一些高级的数据库特写，比如，预处理的语句，绑定变量、存储过程、事务、两阶段提交、事务隔离、主/从结构及数据库分片。</li>
+<li>Sequel现在可以适配ADO, Amalgalite, CUBRID, DataObjects, IBM_DB, JDBC, MySQL, Mysql2, ODBC, Oracle, PostgreSQL, SQLAnywhere, SQLite3, Swift, and TinyTDS。</li>
+</ul>
+<p>Sequel被设计用来简单的连接和操作数据库，Sequel处理所有繁杂的事情，比如，保持连接、使用正确的SQL格式以及获取数据，这样你就可以专注于自己的应用了。<br>Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports chainability，意思应该是关联），使你能够通过简洁灵活的Ruby DSL来方便的获取数据。<br>例如，下面的一行代码就可以返回中东地区国家的平均GDP：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DB[:countries].filter(:region =&gt; &apos;Middle East&apos;).avg(:GDP)</span><br></pre></td></tr></table></figure></p>
+<p>这条语句等价于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT avg(GDP) FROM countries WHERE region = &apos;Middle East&apos;</span><br></pre></td></tr></table></figure></p>
+<p>由于数据库只有在需要的时候才取回数据，所以被缓存以便再使用。记录是作为Hash类型返回的，所以可以使用一个可枚举的接口访问：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">middle_east = DB[:countries].filter(:region =&gt; &apos;Middle East&apos;)</span><br><span class="line">middle_east.order(:name).each&#123;|r| puts r[:name]&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Sequel还提供了简便的方法用于从数据集中提取数据，比如一个扩展的map方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">middle_east.map(:name) #=&gt; [&apos;Egypt&apos;, &apos;Turkey&apos;, &apos;Israel&apos;, ...]</span><br></pre></td></tr></table></figure></p>
+<p>或者是通过.to_hash方法把结果作为一个hash，一列作为kye，另一列作为value:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">middle_east.to_hash(:name, :area) #=&gt; &#123;&apos;Israel&apos; =&gt; 20000, &apos;Turkey&apos; =&gt; 120000, ...&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem install sequel</span><br></pre></td></tr></table></figure>
+<h2 id="小例子"><a href="#小例子" class="headerlink" title="小例子"></a>小例子</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">require &apos;sequel&apos;</span><br><span class="line"></span><br><span class="line">DB = Sequel.sqlite # memory database, requires sqlite3</span><br><span class="line"></span><br><span class="line">DB.create_table :items do</span><br><span class="line">  primary_key :id</span><br><span class="line">  String :name</span><br><span class="line">  Float :price</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">items = DB[:items] # Create a dataset</span><br><span class="line"></span><br><span class="line"># Populate the table</span><br><span class="line">items.insert(:name =&gt; &apos;abc&apos;, :price =&gt; rand * 100)</span><br><span class="line">items.insert(:name =&gt; &apos;def&apos;, :price =&gt; rand * 100)</span><br><span class="line">items.insert(:name =&gt; &apos;ghi&apos;, :price =&gt; rand * 100)</span><br><span class="line"></span><br><span class="line"># Print out the number of records</span><br><span class="line">puts &quot;Item count: #&#123;items.count&#125;&quot;</span><br><span class="line"></span><br><span class="line"># Print out the average price</span><br><span class="line">puts &quot;The average price is: #&#123;items.avg(:price)&#125;&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="Sequel控制台"><a href="#Sequel控制台" class="headerlink" title="Sequel控制台"></a>Sequel控制台</h2><p>Sequel包含一个IRB控制台用于快速的访问数据库，使用方式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sequel sqlite://test.db # test.db in current directory</span><br></pre></td></tr></table></figure></p>
+<p>这样就可以获得一个IRB会话用于访问数据库。</p>
+<h1 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h1><h2 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h2><p>你可以使用Sequel.connect(URL)方法来连接数据库：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">require &apos;sequel&apos;</span><br><span class="line">DB = Sequel.connect(&apos;sqlite://blog.db&apos;) # requires sqlite3</span><br></pre></td></tr></table></figure></p>
+<p>URL可以包含用户名、密码、端口号：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DB = Sequel.connect(&apos;postgres://user:password@host:port/database_name&apos;) # requires pg</span><br></pre></td></tr></table></figure></p>
+<p>你也可以提供可选参数，例如，连接池大小，SQL查询的logger：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DB = Sequel.connect(&quot;postgres://user:password@host:port/database_name&quot;,</span><br><span class="line">  :max_connections =&gt; 10, :logger =&gt; Logger.new(&apos;log/db.log&apos;))</span><br></pre></td></tr></table></figure></p>
+<p>你也可以为连接提供一个block，block执行完成后会从数据库连接断开：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sequel.connect(&apos;postgres://user:password@host:port/database_name&apos;)&#123;|db| db[:posts].delete&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="DB约定"><a href="#DB约定" class="headerlink" title="DB约定"></a>DB约定</h2><p>在Sequel文档中，我们使用DB常量来表示你创建的Sequel::Database实例。<br>另外，一些使用Sequel的框架，可能已经为你创建好了Sequel::Database实例，但是你可能不知道怎么获取它，大部分情况下你可以通过Sequel::Model.db来获取。</p>
+<h2 id="任意的SQL命令"><a href="#任意的SQL命令" class="headerlink" title="任意的SQL命令"></a>任意的SQL命令</h2><p>你可以使用Database#run来执行任意的SQL命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DB.run(&quot;create table t (a text, b text)&quot;)</span><br><span class="line">DB.run(&quot;insert into t values (&apos;a&apos;, &apos;b&apos;)&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>你也可以通过SQL来获取数据集：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dataset = DB[&apos;select id from items&apos;]</span><br><span class="line">dataset.count # will return the number of records in the result set</span><br><span class="line">dataset.map(:id) # will return an array containing all values of the id column in the result set</span><br></pre></td></tr></table></figure></p>
+<p>通过SQL语句获取的数据集，你可以操作每一条记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DB[&apos;select * from items&apos;].each do |row|</span><br><span class="line">  p row</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>在SQL语句中，还可以使用占位符：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name = &apos;Jim&apos;</span><br><span class="line">DB[&apos;select * from items where name = ?&apos;, name].each do |row|</span><br><span class="line">  p row</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h2 id="获取数据集实例"><a href="#获取数据集实例" class="headerlink" title="获取数据集实例"></a>获取数据集实例</h2><p>数据集是记录被检索和操作的主要方式，他们基本是通过Database#from和Database#[]方法获得的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts = DB.from(:posts)</span><br><span class="line">posts = DB[:posts] # same</span><br></pre></td></tr></table></figure></p>
+<h2 id="获取记录"><a href="#获取记录" class="headerlink" title="获取记录"></a>获取记录</h2><p>你可以通过all方法获取所有记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.all</span><br><span class="line"># SELECT * FROM posts</span><br></pre></td></tr></table></figure></p>
+<p>all方法返回一个包含hash的数组，每个hash对应一条记录。<br>你也可以通过each迭代器来访问记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">posts.each&#123;|row| p row&#125;</span><br></pre></td></tr></table></figure></p>
+<p>或者更拽一点：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">names_and_dates = posts.map([:name, :date])</span><br><span class="line">old_posts, recent_posts = posts.partition&#123;|r| r[:date] &lt; Date.today - 7&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以获取第一条记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.first</span><br><span class="line"># SELECT * FROM posts LIMIT 1</span><br></pre></td></tr></table></figure></p>
+<p>或者获取指定的记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts[:id =&gt; 1]</span><br><span class="line"># SELECT * FROM posts WHERE id = 1 LIMIT 1</span><br></pre></td></tr></table></figure></p>
+<p>如果数据集是有序的，你也可以获取最后一条记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.order(:stamp).last</span><br><span class="line"># SELECT * FROM posts ORDER BY stamp DESC LIMIT 1</span><br></pre></td></tr></table></figure></p>
+<h2 id="过滤记录"><a href="#过滤记录" class="headerlink" title="过滤记录"></a>过滤记录</h2><p>一个过滤记录的简单方式是通过提供给where方法一个hash：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_posts = posts.where(:category =&gt; &apos;ruby&apos;, :author =&gt; &apos;david&apos;)</span><br><span class="line"># WHERE category = &apos;ruby&apos; AND author = &apos;david&apos;</span><br></pre></td></tr></table></figure></p>
+<p>也可以指定一个范围：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_posts = posts.where(:stamp =&gt; (Date.today - 14)..(Date.today - 7))</span><br><span class="line"># WHERE stamp &gt;= &apos;2010-06-30&apos; AND stamp &lt;= &apos;2010-07-07&apos;</span><br></pre></td></tr></table></figure></p>
+<p>或者一个数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_posts = posts.where(:category =&gt; [&apos;ruby&apos;, &apos;postgres&apos;, &apos;linux&apos;])</span><br><span class="line"># WHERE category IN (&apos;ruby&apos;, &apos;postgres&apos;, &apos;linux&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>Sequel也可以接受表达式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">my_posts = posts.where&#123;stamp &gt; Date.today &lt;&lt; 1&#125;</span><br><span class="line"># WHERE stamp &gt; &apos;2010-06-14&apos;</span><br><span class="line">my_posts = posts.where&#123;stamp =~ Date.today&#125;</span><br><span class="line"># WHERE stamp = &apos;2010-07-14&apos;</span><br></pre></td></tr></table></figure></p>
+<p>一些数据库还允许指定正则表达式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_posts = posts.where(:category =&gt; /ruby/i)</span><br><span class="line"># WHERE category ~* &apos;ruby&apos;</span><br></pre></td></tr></table></figure></p>
+<p>你也可以使用exclude进行反向过滤：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">my_posts = posts.exclude(:category =&gt; [&apos;ruby&apos;, &apos;postgres&apos;, &apos;linux&apos;])</span><br><span class="line"># WHERE category NOT IN (&apos;ruby&apos;, &apos;postgres&apos;, &apos;linux&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>你甚至可以提供一个WHERE语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.where(&apos;stamp IS NOT NULL&apos;)</span><br><span class="line"># WHERE stamp IS NOT NULL</span><br></pre></td></tr></table></figure></p>
+<p>字符串中也可以使用参数，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">author_name = &apos;JKR&apos;</span><br><span class="line">posts.where(&apos;(stamp &lt; ?) AND (author != ?)&apos;, Date.today - 3, author_name)</span><br><span class="line"># WHERE (stamp &lt; &apos;2010-07-11&apos;) AND (author != &apos;JKR&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>数据集也可以用于子查询：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DB[:items].where(&apos;price &gt; ?&apos;, DB[:items].select&#123;avg(price) + 100&#125;)</span><br><span class="line"># WHERE price &gt; (SELECT avg(price) + 100 FROM items)</span><br></pre></td></tr></table></figure></p>
+<h2 id="汇总记录"><a href="#汇总记录" class="headerlink" title="汇总记录"></a>汇总记录</h2><p>count方法可以很方便的统计记录数量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.where(Sequel.like(:category, &apos;%ruby%&apos;)).count</span><br><span class="line"># SELECT COUNT(*) FROM posts WHERE category LIKE &apos;%ruby%&apos;</span><br></pre></td></tr></table></figure></p>
+<p>通过max/min方法可以获取最大/最小值:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">max = DB[:history].max(:value)</span><br><span class="line"># SELECT max(value) FROM history</span><br><span class="line"></span><br><span class="line">min = DB[:history].min(:value)</span><br><span class="line"># SELECT min(value) FROM history</span><br></pre></td></tr></table></figure></p>
+<p>通过sum/avg方法可以计算和/平均值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sum = DB[:items].sum(:price)</span><br><span class="line"># SELECT sum(price) FROM items</span><br><span class="line">avg = DB[:items].avg(:price)</span><br><span class="line"># SELECT avg(price) FROM items</span><br></pre></td></tr></table></figure></p>
+<h2 id="记录排序"><a href="#记录排序" class="headerlink" title="记录排序"></a>记录排序</h2><p>通过order方法可以对数据集进行排序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">posts.order(:stamp)</span><br><span class="line"># ORDER BY stamp</span><br><span class="line">posts.order(:stamp, :name)</span><br><span class="line"># ORDER BY stamp, name</span><br></pre></td></tr></table></figure></p>
+<p>链式的order和where一样，不起作用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.order(:stamp).order(:name)</span><br><span class="line"># ORDER BY name</span><br></pre></td></tr></table></figure></p>
+<p>但是可以使用order_append/order_prepend方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">posts.order(:stamp).order_append(:name)</span><br><span class="line"># ORDER BY stamp, name</span><br><span class="line"></span><br><span class="line">posts.order(:stamp).order_prepend(:name)</span><br><span class="line"># ORDER BY name, stamp</span><br></pre></td></tr></table></figure></p>
+<p>你也可以指定降序：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">posts.reverse_order(:stamp)</span><br><span class="line"># ORDER BY stamp DESC</span><br><span class="line">posts.order(Sequel.desc(:stamp))</span><br><span class="line"># ORDER BY stamp DESC</span><br></pre></td></tr></table></figure></p>
+<h2 id="核心扩展"><a href="#核心扩展" class="headerlink" title="核心扩展"></a>核心扩展</h2><p>注意上面的例子中使用的Sequel.desc(:stamp)，大部分的Sequel DSL使用这种方式，调用Sequel module方法返回SQL表达式实例。Sequel提供了一个核心扩展将Sequel DSL和Ruby语言更好的整合在一起，所以你可以这样写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:stamp.desc</span><br></pre></td></tr></table></figure></p>
+<p>这个下面是等价的:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sequel.desc(:stamp)</span><br></pre></td></tr></table></figure></p>
+<h2 id="选择列"><a href="#选择列" class="headerlink" title="选择列"></a>选择列</h2><p>select方法可以用于选择列：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">posts.select(:stamp)</span><br><span class="line"># SELECT stamp FROM posts</span><br><span class="line">posts.select(:stamp, :name)</span><br><span class="line"># SELECT stamp, name FROM posts</span><br></pre></td></tr></table></figure></p>
+<p>链式的select效果和order类似，最后一个生效，而不是像where：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.select(:stamp).select(:name)</span><br><span class="line"># SELECT name FROM posts</span><br></pre></td></tr></table></figure></p>
+<p>类似的，select也有一个select_append方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.select(:stamp).select_append(:name)</span><br><span class="line"># SELECT stamp, name FROM posts</span><br></pre></td></tr></table></figure></p>
+<h2 id="删除记录"><a href="#删除记录" class="headerlink" title="删除记录"></a>删除记录</h2><p>使用delete方法即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.where(&apos;stamp &lt; ?&apos;, Date.today - 3).delete</span><br><span class="line"># DELETE FROM posts WHERE stamp &lt; &apos;2010-07-11&apos;</span><br></pre></td></tr></table></figure></p>
+<p>使用delete时要小心，因为delete会影响数据集中的所有行；先调用select，在调用delete：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># DO THIS:</span><br><span class="line">posts.where(&apos;stamp &lt; ?&apos;, Date.today - 7).delete</span><br><span class="line"># NOT THIS:</span><br><span class="line">posts.delete.where(&apos;stamp &lt; ?&apos;, Date.today - 7)</span><br></pre></td></tr></table></figure></p>
+<h2 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h2><p>使用insert方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.insert(:category =&gt; &apos;ruby&apos;, :author =&gt; &apos;david&apos;)</span><br><span class="line"># INSERT INTO posts (category, author) VALUES (&apos;ruby&apos;, &apos;david&apos;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h2><p>使用update方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.where(&apos;stamp &lt; ?&apos;, Date.today - 7).update(:state =&gt; &apos;archived&apos;)</span><br><span class="line"># UPDATE posts SET state = &apos;archived&apos; WHERE stamp &lt; &apos;2010-07-07&apos;</span><br></pre></td></tr></table></figure></p>
+<p>你可以引用要设置的列：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts.where&#123;|o| o.stamp &lt; Date.today - 7&#125;.update(:backup_number =&gt; Sequel.+(:backup_number, 1))</span><br><span class="line"># UPDATE posts SET backup_number = backup_number + 1 WHERE stamp &lt; &apos;2010-07-07&apos;</span><br></pre></td></tr></table></figure></p>
+<p>和delete类似，update会影响数据集中所有的记录，所以，显示用where，再使用update：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># DO THIS:</span><br><span class="line">posts.where(&apos;stamp &lt; ?&apos;, Date.today - 7).update(:state =&gt; &apos;archived&apos;)</span><br><span class="line"># NOT THIS:</span><br><span class="line">posts.update(:state =&gt; &apos;archived&apos;).where(&apos;stamp &lt; ?&apos;, Date.today - 7)</span><br></pre></td></tr></table></figure></p>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>你可以通过Database#transaction方法把代码打包到一个数据库事务中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DB.transaction do</span><br><span class="line">  posts.insert(:category =&gt; &apos;ruby&apos;, :author =&gt; &apos;david&apos;)</span><br><span class="line">  posts.where(&apos;stamp &lt; ?&apos;, Date.today - 7).update(:state =&gt; &apos;archived&apos;)</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>如果代码块没有出现异常，这个事务就会被提交。如果出现了异常，事务就会回滚，异常会被抛出。如果你想回滚事务，但是不想在block外抛出异常，你可以在block里面抛出Sequel::Rollack异常：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DB.transaction do</span><br><span class="line">  posts.insert(:category =&gt; &apos;ruby&apos;, :author =&gt; &apos;david&apos;)</span><br><span class="line">  if posts.filter(&apos;stamp &lt; ?&apos;, Date.today - 7).update(:state =&gt; &apos;archived&apos;) == 0</span><br><span class="line">    raise Sequel::Rollback</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h2 id="联接表"><a href="#联接表" class="headerlink" title="联接表"></a>联接表</h2><p>Sequel中连接表很简单：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">order_items = DB[:items].join(:order_items, :item_id =&gt; :id).</span><br><span class="line">  where(:order_id =&gt; 1234)</span><br><span class="line"># SELECT * FROM items INNER JOIN order_items</span><br><span class="line"># ON order_items.item_id = items.id </span><br><span class="line"># WHERE order_id = 1234</span><br></pre></td></tr></table></figure></p>
+<p>这里需要注意的是，item_id会自动使用被连接的表限定，id会自动使用上个联接的表进行限定。<br><strong>在Sequel中，默认的selection是选择所有联接表的所有列。但是Sequel返回的是一个以列名作为key的hash，所有如果有不同表包含相同的列名，返回的hash结果就会有问题。所以使用连接时，通常会使用select、select_all或者select_append。</strong></p>
+<h2 id="Sequel中的列引用"><a href="#Sequel中的列引用" class="headerlink" title="Sequel中的列引用"></a>Sequel中的列引用</h2><p>Sequel期望指定的列名使用符号，另外，返回的hash结果也使用符号作为key。在很多情况下，这让你可以自由的混用字面值和列引用。下面两行代码产生等价的SQL语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">items.where(:x =&gt; 1)</span><br><span class="line"># SELECT * FROM items WHERE (x = 1)</span><br><span class="line">items.where(1 =&gt; :x)</span><br><span class="line"># SELECT * FROM items WHERE (1 = x)&quot;</span><br></pre></td></tr></table></figure></p>
+<p>Ruby的字符串类型也被当做SQL字符串类型处理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">items.where(:x =&gt; &apos;x&apos;)</span><br><span class="line"># SELECT * FROM items WHERE (x = &apos;x&apos;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="限定标识符"><a href="#限定标识符" class="headerlink" title="限定标识符"></a>限定标识符</h2><p>在SQL中，标识符用于表示一个列、表或者数据库的名字。标识符可以使用带双下划线的特殊符号限定:table__column:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">items.literal(:items__price)</span><br><span class="line"># items.price</span><br></pre></td></tr></table></figure></p>
+<p>另一种限定列的方式是使用Sequel.qualify方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">items.literal(Sequel.qualify(:items, :price))</span><br><span class="line"># items.price</span><br></pre></td></tr></table></figure></p>
+<p>通过表名来限定列是比较常见的，你也可以使用数据库名来限定表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">posts = DB[:some_schema__posts]</span><br><span class="line"># SELECT * FROM some_schema.posts</span><br></pre></td></tr></table></figure></p>
+<h2 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h2><p>可以使用三下划线来取别名，:column<strong>_alias 或者 :table</strong>column___alias:：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">items.literal(:price___p)</span><br><span class="line"># price AS p</span><br><span class="line">items.literal(:items__price___p)</span><br><span class="line"># items.price AS p</span><br></pre></td></tr></table></figure></p>
+<p>另一种方式是使用Sequal.as方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">items.literal(Sequel.as(:price, :p))</span><br><span class="line"># price AS p</span><br></pre></td></tr></table></figure></p>
+<p>你可以使用Sequel.as为任意表达式指定别名，而不只是标识符。</p>
+<h2 id="Sequel模型"><a href="#Sequel模型" class="headerlink" title="Sequel模型"></a>Sequel模型</h2><p>一个模型类封装了一个数据集，该类的一个实例封装了数据集的一条记录。<br>Model类是继承自Sequel::Model的普通Ruby类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DB = Sequel.connect(&apos;sqlite://blog.db&apos;)</span><br><span class="line">class Post &lt; Sequel::Model</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>当一个Model类被创建后，它会处理数据库中的表，并且设置表中所有列的存取方法（Sequel::Model实现了active record模式）。<br>Sequel模型类假定表名是类名的复数形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Post.table_name #=&gt; :posts</span><br></pre></td></tr></table></figure></p>
+<p>你可以显示的指定表名，或者为数据集指定：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Post &lt; Sequel::Model(:my_posts)</span><br><span class="line">end</span><br><span class="line"># or:</span><br><span class="line">Post.set_dataset :my_posts</span><br></pre></td></tr></table></figure></p>
+<p>你可以传递给set_dataset一个符号，它假定你要关联到的是同名的表。你也可以通过数据集调用，这将为该model的所有查询设置默认值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Post.set_dataset DB[:my_posts].where(:category =&gt; &apos;ruby&apos;)</span><br><span class="line">Post.set_dataset DB[:my_posts].select(:id, :name).order(:date)</span><br></pre></td></tr></table></figure></p>
+<p>这一段表示没看明白：</p>
+<blockquote>
+<p>If you call set_dataset with a symbol, it assumes you are referring to the table with the same name. You can also call it with a dataset, which will set the defaults for all retrievals for that model:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; Post.set_dataset DB[:my_posts].where(:category =&gt; &apos;ruby&apos;)</span><br><span class="line">&gt; Post.set_dataset DB[:my_posts].select(:id, :name).order(:date)</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="模型实例"><a href="#模型实例" class="headerlink" title="模型实例"></a>模型实例</h3><p>模型实例由主键标识。大多数情况下，Sequel查询数据库来决定主键，如果没有，默认使用id。Model.[]方法可以用来根据主键提取数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post = Post[123]</span><br></pre></td></tr></table></figure></p>
+<p>pk方法用于返回该记录的主键值:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post.pk #=&gt; 123</span><br></pre></td></tr></table></figure></p>
+<p>Sequel模型允许你使用任何列作为主键，即使是由多个列组成的复合键：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Post &lt; Sequel::Model</span><br><span class="line">  set_primary_key [:category, :title]</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">post = Post[&apos;ruby&apos;, &apos;hello world&apos;]</span><br><span class="line">post.pk #=&gt; [&apos;ruby&apos;, &apos;hello world&apos;]</span><br></pre></td></tr></table></figure></p>
+<p>通过no_primary_key，你也可以定义一个没有主键的模型类，同时你也丧失了简单的更新/删除记录的能力了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Post.no_primary_key</span><br></pre></td></tr></table></figure></p>
+<p>一个单一模型实例也可以通过指定一个条件获取：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">post = Post[:title =&gt; &apos;hello world&apos;]</span><br><span class="line">post = Post.first&#123;num_comments &lt; 10&#125;</span><br></pre></td></tr></table></figure></p>
+<p>###<br>一个model类将很多的方法转发给了底层的数据集，这意味着你可以使用大多数的Dataset API去创建返回模型实例的自定义查询：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Post.where(:category =&gt; &apos;ruby&apos;).each&#123;|post| p post&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你也可以操作数据集中的记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Post.where&#123;num_comments &lt; 7&#125;.delete</span><br><span class="line">Post.where(Sequel.like(:title, /ruby/)).update(:category =&gt; &apos;ruby&apos;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="访问记录值"><a href="#访问记录值" class="headerlink" title="访问记录值"></a>访问记录值</h3><p>一个模型实例以hash的形式存储了它的值，hash中的key为符号形式的列名，可以通过values方法获取实例的值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post.values #=&gt; &#123;:id =&gt; 123, :category =&gt; &apos;ruby&apos;, :title =&gt; &apos;hello world&apos;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你可以像访问对象属性一样访问一个记录的值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">post.id #=&gt; 123</span><br><span class="line">post.title #=&gt; &apos;hello world&apos;</span><br></pre></td></tr></table></figure></p>
+<p>如果记录的属性名在模式能够的数据集中不是有效的列名（比如你使用了select_append方法添加了一个通过计算得到的列），你可以使用Model#[]来访问这些值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">post[:id] #=&gt; 123</span><br><span class="line">post[:title] #=&gt; &apos;hello world&apos;</span><br></pre></td></tr></table></figure></p>
+<p>你还可以通过以下方式修改记录的值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">post.title = &apos;hey there&apos;</span><br><span class="line">post[:title] = &apos;hey there&apos;</span><br></pre></td></tr></table></figure></p>
+<p>这只会改变model实例的值，不会更新数据库中的数据。要更新数据库中的数据，必须使用save方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post.save</span><br></pre></td></tr></table></figure></p>
+<h3 id="多列赋值"><a href="#多列赋值" class="headerlink" title="多列赋值"></a>多列赋值</h3><p>你可以通过一个方法的调用给多个列赋值，例如，set方法更新模型的列值但不保存到数据库中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post.set(:title=&gt;&apos;hey there&apos;, :updated_by=&gt;&apos;foo&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>update方法完成类似的功能，但是会保存到数据中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post.update(:title =&gt; &apos;hey there&apos;, :updated_by=&gt;&apos;foo&apos;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="创建新记录"><a href="#创建新记录" class="headerlink" title="创建新记录"></a>创建新记录</h3><p>可以通过调用Model.create方法创建新记录：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">post = Post.create(:title =&gt; &apos;hello world&apos;)</span><br></pre></td></tr></table></figure></p>
+<p>另一种方式是先创建实例，然后再保存：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">post = Post.new</span><br><span class="line">post.title = &apos;hello world&apos;</span><br><span class="line">post.save</span><br></pre></td></tr></table></figure></p>
+<p>你也可以为Model.new和Model.create方法提供一个块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">post = Post.new do |p|</span><br><span class="line">  p.title = &apos;hello world&apos;</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">post = Post.create&#123;|p| p.title = &apos;hello world&apos;&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="回调"><a href="#回调" class="headerlink" title="回调"></a>回调</h3><p>你可以通过钩子方法在创建、更新、删除时执行特定方法。钩子方法包括：</p>
+<ul>
+<li>before_create and after_create </li>
+<li>before_update and after_update </li>
+<li>before_save and after_save</li>
+<li>before_destroy and after_destroy</li>
+<li>before_validation and after_validation<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Post &lt; Sequel::Model</span><br><span class="line">  def after_create</span><br><span class="line">    super</span><br><span class="line">    author.increase_post_count</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  def after_destroy</span><br><span class="line">    super</span><br><span class="line">    author.decrease_post_count</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>自定义钩子方法时，记得调用super方法。几乎所有的Sequel::Model方法都可以被安全的重写，但一定要调用super方法，否则就有出错的风险。<br>对于上面的例子，你也快而已使用数据库触发器。钩子可以用于保证数据的完整性，但是只有在通过model实例修改数据库时才会保证，同时还会面临很多竞态条件。最好是使用数据库触发器和约束来保证数据完整性。</p>
+<h3 id="删除记录-1"><a href="#删除记录-1" class="headerlink" title="删除记录"></a>删除记录</h3><p>你可以调用delete或destroy方法删除记录，这两个方法的唯一区别是，destroy方法会调用before_destroy和after_destroy钩子方法，但是delete不会：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">post.delete # =&gt; bypasses hooks</span><br><span class="line">post.destroy # =&gt; runs hooks</span><br></pre></td></tr></table></figure></p>
+<p>通过delete和destroy也可以一次删除多个符合条件的记录:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Post.where(:category =&gt; 32).delete # =&gt; bypasses hooks</span><br><span class="line">Post.where(:category =&gt; 32).destroy # =&gt; runs hooks</span><br></pre></td></tr></table></figure></p>
+<p>注意，destroy方法会挨个删除记录，但是delete会在一次SQL查询中删除所有符合的记录。</p>
+<h3 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h3><p>模型类之间的关系使用关联表示，用于反映数据库中表的关系，在数据库中通常通过外键指定。通过如下类方法执行关联：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Post &lt; Sequel::Model</span><br><span class="line">  many_to_one :author</span><br><span class="line">  one_to_many :comments</span><br><span class="line">  one_to_one :first_comment, :class=&gt;:Comment, :order=&gt;:id</span><br><span class="line">  many_to_many :tags</span><br><span class="line">  one_through_one :first_tag, :class=&gt;:Tag, :order=&gt;:name, :right_key=&gt;:tag_id</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>many_to_one和one_to_one为每个模型对象创建一个getter和setter方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">post = Post.create(:name =&gt; &apos;hi!&apos;)</span><br><span class="line">post.author = Author[:name =&gt; &apos;Sharon&apos;]</span><br><span class="line">post.author</span><br></pre></td></tr></table></figure></p>
+<p>one_to_many和many_to_many方法创建一个getter方法，一个添加对象到该关联关系的方法，一个从该关联关系删除对象的方法，一个从该关联关系中删除所有关联对象的方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">post = Post.create(:name =&gt; &apos;hi!&apos;)</span><br><span class="line">post.comments</span><br><span class="line"></span><br><span class="line">comment = Comment.create(:text=&gt;&apos;hi&apos;)</span><br><span class="line">post.add_comment(comment)</span><br><span class="line">post.remove_comment(comment)</span><br><span class="line">post.remove_all_comments</span><br><span class="line"></span><br><span class="line">tag = Tag.create(:tag=&gt;&apos;interesting&apos;)</span><br><span class="line">post.add_tag(tag)</span><br><span class="line">post.remove_tag(tag)</span><br><span class="line">post.remove_all_tags</span><br></pre></td></tr></table></figure></p>
+<p>注意，remove_<em>和remove<em>all</em></em>方法并不从数据库中删除数据，它们只是从接收者解除关联对象。<br>所有的关联有一个以dataset结尾的方法，可以用于进一步过滤、排序或者是该返回的对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Delete all of this post&apos;s comments from the database</span><br><span class="line">post.comments_dataset.destroy</span><br><span class="line"></span><br><span class="line"># Return all tags related to this post with no subscribers, ordered by the tag&apos;s name</span><br><span class="line">post.tags_dataset.where(:subscribers=&gt;0).order(:name).all</span><br></pre></td></tr></table></figure></p>
+<h3 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h3><p>Associations can be eagerly loaded via eager and the :eager association option. Eager loading is used when loading a group of objects. It loads all associated objects for all of the current objects in one query, instead of using a separate query to get the associated objects for each current object. Eager loading requires that you retrieve all model objects at once via all (instead of individually by each). Eager loading can be cascaded, loading association’s associated objects.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">class Person &lt; Sequel::Model</span><br><span class="line">  one_to_many :posts, :eager=&gt;[:tags]</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">class Post &lt; Sequel::Model</span><br><span class="line">  many_to_one :person</span><br><span class="line">  one_to_many :replies</span><br><span class="line">  many_to_many :tags</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">class Tag &lt; Sequel::Model</span><br><span class="line">  many_to_many :posts</span><br><span class="line">  many_to_many :replies</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">class Reply &lt; Sequel::Model</span><br><span class="line">  many_to_one :person</span><br><span class="line">  many_to_one :post</span><br><span class="line">  many_to_many :tags</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"># Eager loading via .eager</span><br><span class="line">Post.eager(:person).all</span><br><span class="line"></span><br><span class="line"># eager is a dataset method, so it works with filters/orders/limits/etc.</span><br><span class="line">Post.where&#123;topic &gt; &apos;M&apos;&#125;.order(:date).limit(5).eager(:person).all</span><br><span class="line"></span><br><span class="line">person = Person.first</span><br><span class="line"># Eager loading via :eager (will eagerly load the tags for this person&apos;s posts)</span><br><span class="line">person.posts</span><br><span class="line"></span><br><span class="line"># These are equivalent</span><br><span class="line">Post.eager(:person, :tags).all</span><br><span class="line">Post.eager(:person).eager(:tags).all</span><br><span class="line"></span><br><span class="line"># Cascading via .eager</span><br><span class="line">Tag.eager(:posts=&gt;:replies).all</span><br><span class="line"></span><br><span class="line"># Will also grab all associated posts&apos; tags (because of :eager)</span><br><span class="line">Reply.eager(:person=&gt;:posts).all</span><br><span class="line"></span><br><span class="line"># No depth limit (other than memory/stack), and will also grab posts&apos; tags</span><br><span class="line"># Loads all people, their posts, their posts&apos; tags, replies to those posts,</span><br><span class="line"># the person for each reply, the tag for each reply, and all posts and</span><br><span class="line"># replies that have that tag.  Uses a total of 8 queries.</span><br><span class="line">Person.eager(:posts=&gt;&#123;:replies=&gt;[:person, &#123;:tags=&gt;[:posts, :replies]&#125;]&#125;).all</span><br></pre></td></tr></table></figure></p>
+<p>In addition to using eager, you can also use eager_graph, which will use a single query to get the object and all associated objects. This may be necessary if you want to filter or order the result set based on columns in associated tables. It works with cascading as well, the API is very similar. Note that using eager_graph to eagerly load multiple *_to_many associations will cause the result set to be a cartesian product, so you should be very careful with your filters when using it in that case.</p>
+<p>You can dynamically customize the eagerly loaded dataset by using using a proc. This proc is passed the dataset used for eager loading, and should return a modified copy of that dataset:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Eagerly load only replies containing &apos;foo&apos;</span><br><span class="line">Post.eager(:replies=&gt;proc&#123;|ds| ds.where(Sequel.like(text, &apos;%foo%&apos;))&#125;).all</span><br></pre></td></tr></table></figure></p>
+<p>This also works when using eager_graph, in which case the proc is called with dataset to graph into the current dataset:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Post.eager_graph(:replies=&gt;proc&#123;|ds| ds.where(Sequel.like(text, &apos;%foo%&apos;))&#125;).all</span><br></pre></td></tr></table></figure></p>
+<p>You can dynamically customize eager loads for both eager and eager_graph while also cascading, by making the value a single entry hash with the proc as a key, and the cascaded associations as the value:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># Eagerly load only replies containing &apos;foo&apos;, and the person and tags for those replies</span><br><span class="line">Post.eager(:replies=&gt;&#123;proc&#123;|ds| ds.where(Sequel.like(text, &apos;%foo%&apos;))&#125;=&gt;[:person, :tags]&#125;).all</span><br></pre></td></tr></table></figure></p>
+<h3 id="Joining-with-Associations"><a href="#Joining-with-Associations" class="headerlink" title="Joining with Associations"></a>Joining with Associations</h3><p>You can use the association_join method to add a join to the model’s dataset based on the assocation:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Post.association_join(:author)</span><br><span class="line"># SELECT * FROM posts</span><br><span class="line"># INNER JOIN authors AS author ON (author.id = posts.author_id)</span><br></pre></td></tr></table></figure></p>
+<p>This comes with variants for different join types:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Post.association_left_join(:replies)</span><br><span class="line"># SELECT * FROM posts</span><br><span class="line"># LEFT JOIN replies ON (replies.post_id = posts.id)</span><br></pre></td></tr></table></figure></p>
+<p>Similar to the eager loading methods, you can use multiple associations and nested associations:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Post.association_join(:author, :replies=&gt;:person).all</span><br><span class="line"># SELECT * FROM posts</span><br><span class="line"># INNER JOIN authors AS author ON (author.id = posts.author_id)</span><br><span class="line"># INNER JOIN replies ON (replies.post_id = posts.id)</span><br><span class="line"># INNER JOIN people AS person ON (person.id = replies.person_id)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Extending-the-underlying-dataset"><a href="#Extending-the-underlying-dataset" class="headerlink" title="Extending the underlying dataset"></a>Extending the underlying dataset</h3><p>The recommended way to implement table-wide logic by defining methods on the dataset using dataset_module:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Post &lt; Sequel::Model</span><br><span class="line">  dataset_module do</span><br><span class="line">    def posts_with_few_comments</span><br><span class="line">      where&#123;num_comments &lt; 30&#125;</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    def clean_posts_with_few_comments</span><br><span class="line">      posts_with_few_comments.delete</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>This allows you to have access to your model API from filtered datasets as well:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Post.where(:category =&gt; &apos;ruby&apos;).clean_posts_with_few_comments</span><br></pre></td></tr></table></figure></p>
+<p>Sequel models also provide a subset class method that creates a dataset method with a simple filter:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Post &lt; Sequel::Model</span><br><span class="line">  subset(:posts_with_few_comments)&#123;num_comments &lt; 30&#125;</span><br><span class="line">  subset :invisible, Sequel.~(:visible)</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h3 id="Model-Validations"><a href="#Model-Validations" class="headerlink" title="Model Validations"></a>Model Validations</h3><p>You can define a validate method for your model, which save will check before attempting to save the model in the database. If an attribute of the model isn’t valid, you should add an error message for that attribute to the model object’s errors. If an object has any errors added by the validate method, save will raise an error or return false depending on how it is configured (the raise_on_save_failure flag).<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Post &lt; Sequel::Model</span><br><span class="line">  def validate</span><br><span class="line">    super</span><br><span class="line">    errors.add(:name, &quot;can&apos;t be empty&quot;) if name.empty?</span><br><span class="line">    errors.add(:written_on, &quot;should be in the past&quot;) if written_on &gt;= Time.now</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixinpay.png" alt="崔咩咩 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/25/ansible使用记录/" rel="next" title="ansible使用记录">
+                <i class="fa fa-chevron-left"></i> ansible使用记录
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="崔咩咩" />
+          <p class="site-author-name" itemprop="name">崔咩咩</p>
+          <p class="site-description motion-element" itemprop="description">有时迷茫，不停思考，持续成长</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports-chainability，意思应该是关联），使你能够通过简洁灵活的Ruby-DSL来方便的获取数据。"><span class="nav-number">1.</span> <span class="nav-text">Sequel使用数据库的概念来检索数据。一个数据集对象封装了一个SQL查询并且支持关联（原文是supports chainability，意思应该是关联），使你能够通过简洁灵活的Ruby DSL来方便的获取数据。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sequel-Ruby数据库工具包"><span class="nav-number"></span> <span class="nav-text">Sequel: Ruby数据库工具包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小例子"><span class="nav-number">3.</span> <span class="nav-text">小例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequel控制台"><span class="nav-number">4.</span> <span class="nav-text">Sequel控制台</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#入门"><span class="nav-number"></span> <span class="nav-text">入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连接数据库"><span class="nav-number">1.</span> <span class="nav-text">连接数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DB约定"><span class="nav-number">2.</span> <span class="nav-text">DB约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#任意的SQL命令"><span class="nav-number">3.</span> <span class="nav-text">任意的SQL命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取数据集实例"><span class="nav-number">4.</span> <span class="nav-text">获取数据集实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取记录"><span class="nav-number">5.</span> <span class="nav-text">获取记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤记录"><span class="nav-number">6.</span> <span class="nav-text">过滤记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#汇总记录"><span class="nav-number">7.</span> <span class="nav-text">汇总记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录排序"><span class="nav-number">8.</span> <span class="nav-text">记录排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心扩展"><span class="nav-number">9.</span> <span class="nav-text">核心扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择列"><span class="nav-number">10.</span> <span class="nav-text">选择列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除记录"><span class="nav-number">11.</span> <span class="nav-text">删除记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入数据"><span class="nav-number">12.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新数据"><span class="nav-number">13.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务"><span class="nav-number">14.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联接表"><span class="nav-number">15.</span> <span class="nav-text">联接表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequel中的列引用"><span class="nav-number">16.</span> <span class="nav-text">Sequel中的列引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限定标识符"><span class="nav-number">17.</span> <span class="nav-text">限定标识符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#别名"><span class="nav-number">18.</span> <span class="nav-text">别名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequel模型"><span class="nav-number">19.</span> <span class="nav-text">Sequel模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型实例"><span class="nav-number">19.1.</span> <span class="nav-text">模型实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问记录值"><span class="nav-number">19.2.</span> <span class="nav-text">访问记录值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多列赋值"><span class="nav-number">19.3.</span> <span class="nav-text">多列赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新记录"><span class="nav-number">19.4.</span> <span class="nav-text">创建新记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回调"><span class="nav-number">19.5.</span> <span class="nav-text">回调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除记录-1"><span class="nav-number">19.6.</span> <span class="nav-text">删除记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联"><span class="nav-number">19.7.</span> <span class="nav-text">关联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预加载"><span class="nav-number">19.8.</span> <span class="nav-text">预加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Joining-with-Associations"><span class="nav-number">19.9.</span> <span class="nav-text">Joining with Associations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extending-the-underlying-dataset"><span class="nav-number">19.10.</span> <span class="nav-text">Extending the underlying dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Model-Validations"><span class="nav-number">19.11.</span> <span class="nav-text">Model Validations</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔咩咩</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

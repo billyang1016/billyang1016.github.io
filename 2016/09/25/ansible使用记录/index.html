@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="技术," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="我的自白书">
-<meta property="og:url" content="http://yoursite.com/404.html">
+<meta name="description" content="ansible使用记录。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ansible使用记录">
+<meta property="og:url" content="http://yoursite.com/2016/09/25/ansible使用记录/index.html">
 <meta property="og:site_name" content="我的自白书">
-<meta property="og:description">
-<meta property="og:updated_time" content="2016-05-08T11:07:08.236Z">
+<meta property="og:description" content="ansible使用记录。">
+<meta property="og:updated_time" content="2016-09-25T04:51:49.438Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="我的自白书">
-<meta name="twitter:description">
+<meta name="twitter:title" content="ansible使用记录">
+<meta name="twitter:description" content="ansible使用记录。">
 
 
 
@@ -111,13 +111,7 @@
   };
 </script>
 
-  <title>
-  
-
-  
-     | 我的自白书
-  
-</title>
+  <title> ansible使用记录 | 我的自白书 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -138,7 +132,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -228,23 +222,161 @@
 
   <div id="posts" class="posts-expand">
     
-    
-      <!DOCTYPE HTML>
-<html>
-<head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8;">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="robots" content="all">
-  <meta name="robots" content="index,follow">
-</head>
-<body>
 
-<script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8" homepageurl="your site url " homepagename="�ص��ҵ���ҳ">
-</script>
+  
+  
 
-</body>
-</html>
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ansible使用记录
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-25T12:47:26+08:00" content="2016-09-25">
+              2016-09-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/ansible/" itemprop="url" rel="index">
+                    <span itemprop="name">ansible</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>ansible使用记录。<br><a id="more"></a></p>
+<h1 id="ansible-使用记录"><a href="#ansible-使用记录" class="headerlink" title="ansible 使用记录"></a>ansible 使用记录</h1><h2 id="ssh密钥管理"><a href="#ssh密钥管理" class="headerlink" title="ssh密钥管理"></a>ssh密钥管理</h2><ul>
+<li><p>master上生成密钥<br>ssh-keygen -t rsa -P ‘’</p>
+</li>
+<li><p>公钥放到其他节点上<br>~/.ssh# ssh-copy-id -i /root/.ssh/ansible_master_rsa.pub root@host_ip<br>会在host_ip主机的~/.ssh/生成authorized_keys，内容为上面的公钥内容。<br>也可以把公钥放到对应的节点上之后，通过cat xxx.put &gt;&gt; authorized_keys追加进去。</p>
+</li>
+</ul>
+<h2 id="ansible-配置"><a href="#ansible-配置" class="headerlink" title="ansible 配置"></a>ansible 配置</h2><h3 id="配置文件修改"><a href="#配置文件修改" class="headerlink" title="配置文件修改"></a>配置文件修改</h3><p>vim /etc/ansible/ansible.cfg<br>……<br>remote_port = 22 #被管理节点ssh服务端口<br>private_key_file = /root/.ssh/id_rsa_storm1 #master ssh私钥路径<br>……</p>
+<h3 id="hosts文件修改"><a href="#hosts文件修改" class="headerlink" title="hosts文件修改"></a>hosts文件修改</h3><p>/etc/ansible/hosts记录了被管理的主机，格式：<br>[分组]<br>ip1<br>ip2</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixinpay.png" alt="崔咩咩 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag">#技术</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/24/rack简介/" rel="next" title="rack简介">
+                <i class="fa fa-chevron-left"></i> rack简介
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -276,8 +408,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -327,6 +468,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ansible-使用记录"><span class="nav-number">1.</span> <span class="nav-text">ansible 使用记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh密钥管理"><span class="nav-number">1.1.</span> <span class="nav-text">ssh密钥管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ansible-配置"><span class="nav-number">1.2.</span> <span class="nav-text">ansible 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件修改"><span class="nav-number">1.2.1.</span> <span class="nav-text">配置文件修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hosts文件修改"><span class="nav-number">1.2.2.</span> <span class="nav-text">hosts文件修改</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -413,6 +565,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 

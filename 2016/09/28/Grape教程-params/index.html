@@ -1,0 +1,655 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Ruby,Grape,RESTful," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="params介绍。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Grape教程-params">
+<meta property="og:url" content="http://yoursite.com/2016/09/28/Grape教程-params/index.html">
+<meta property="og:site_name" content="我的自白书">
+<meta property="og:description" content="params介绍。">
+<meta property="og:updated_time" content="2016-09-28T14:27:53.802Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Grape教程-params">
+<meta name="twitter:description" content="params介绍。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Grape教程-params | 我的自白书 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">我的自白书</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">寻找自己</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Grape教程-params
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-28T22:25:43+08:00" content="2016-09-28">
+              2016-09-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>params介绍。<br><a id="more"></a></p>
+<h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><p>请求参数可以通过params获取，params是一个hash对象，包括GET、POST、PUT参数，以及路径字符串中的任何命名参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">get :public_timeline do</span><br><span class="line">  Status.order(params[:sort_by])</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>Parameters are automatically populated from the request body on POST and PUT for form input, JSON and XML content-types.<br>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -d &apos;&#123;&quot;text&quot;: &quot;140 characters&quot;&#125;&apos; &apos;http://localhost:9292/statuses&apos; -H Content-Type:application/json -v</span><br></pre></td></tr></table></figure></p>
+<p>Grape中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">post &apos;/statuses&apos; do</span><br><span class="line">  Status.create!(text: params[:text])</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>多部分的POSTs和PUTs也是支持的。<br>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --form image_file=&apos;@image.jpg;type=image/jpg&apos; http://localhost:9292/upload</span><br></pre></td></tr></table></figure></p>
+<p>Grape中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">post &apos;upload&apos; do</span><br><span class="line">  # file in params[:image_file]</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>在以下任何一个或两个有冲突时：</p>
+<ul>
+<li>路径字符串参数</li>
+<li>GET/POST/PUT参数</li>
+<li>POST/PUT请求正文的内容<br>路径字符串中的将生效。</li>
+</ul>
+<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p>Grape只允许访问在params块中声明的变量，它过滤掉传递过来但是不允许访问的变量，请看下面的API：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">format :json</span><br><span class="line"></span><br><span class="line">post &apos;users/signup&apos; do</span><br><span class="line">  &#123; &apos;declared_params&apos; =&gt; declared(params) &#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>如果我们没有指定任何参数，declared会返回一个空的Hashie::Mash实例。<br>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -H &quot;Content-Type: application/json&quot; localhost:9292/users/signup -d &apos;&#123;&quot;user&quot;: &#123;&quot;first_name&quot;:&quot;first name&quot;, &quot;last_name&quot;: &quot;last name&quot;&#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>应答：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;declared_params&quot;: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一旦我们添加了参数requirements，Grape仅返回声明的参数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">format :json</span><br><span class="line"></span><br><span class="line">params do</span><br><span class="line">  requires :user, type: Hash do</span><br><span class="line">    requires :first_name, type: String</span><br><span class="line">    requires :last_name, type: String</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">post &apos;users/signup&apos; do</span><br><span class="line">  &#123; &apos;declared_params&apos; =&gt; declared(params) &#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -H &quot;Content-Type: application/json&quot; localhost:9292/users/signup -d &apos;&#123;&quot;user&quot;: &#123;&quot;first_name&quot;:&quot;first name&quot;, &quot;last_name&quot;: &quot;last name&quot;, &quot;random&quot;: &quot;never shown&quot;&#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>应答：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;declared_params&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;first_name&quot;: &quot;first name&quot;,</span><br><span class="line">      &quot;last_name&quot;: &quot;last name&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>返回的hash是Hashie::Mash实例，允许你使用.访问参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">declared(params).user == declared(params)[&apos;user&apos;]</span><br></pre></td></tr></table></figure></p>
+<p>The #declared method is not available to before filters, as those are evaluated prior to parameter coercion.</p>
+<h3 id="包含父命名空间"><a href="#包含父命名空间" class="headerlink" title="包含父命名空间"></a>包含父命名空间</h3><p>默认的，declared(params)包含了在父命名空间中声明的参数，如果你只向返回当前命名空间的参数，可以把include_parent_namespaces选项设置为false。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">format :json</span><br><span class="line"></span><br><span class="line">namespace :parent do</span><br><span class="line">  params do</span><br><span class="line">    requires :parent_name, type: String</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  namespace &apos;:parent_name&apos; do</span><br><span class="line">    params do</span><br><span class="line">      requires :child_name, type: String</span><br><span class="line">    end</span><br><span class="line">    get &apos;:child_name&apos; do</span><br><span class="line">      &#123;</span><br><span class="line">        &apos;without_parent_namespaces&apos; =&gt; declared(params, include_parent_namespaces: false),</span><br><span class="line">        &apos;with_parent_namespaces&apos; =&gt; declared(params, include_parent_namespaces: true),</span><br><span class="line">      &#125;</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X GET -H &quot;Content-Type: application/json&quot; localhost:9292/parent/foo/bar</span><br></pre></td></tr></table></figure></p>
+<p>应答：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;without_parent_namespaces&quot;: &#123;</span><br><span class="line">    &quot;child_name&quot;: &quot;bar&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;with_parent_namespaces&quot;: &#123;</span><br><span class="line">    &quot;parent_name&quot;: &quot;foo&quot;,</span><br><span class="line">    &quot;child_name&quot;: &quot;bar&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Include-missing"><a href="#Include-missing" class="headerlink" title="Include missing"></a>Include missing</h3><p>默认的，declared(params)包含值为nil的参数，如果你只想返回值为非nil的参数，你可以使用include_missing 选项。该选项默认为true，看下下面的API：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">format :json</span><br><span class="line"></span><br><span class="line">params do</span><br><span class="line">  requires :first_name, type: String</span><br><span class="line">  optional :last_name, type: String</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">post &apos;users/signup&apos; do</span><br><span class="line">  &#123; &apos;declared_params&apos; =&gt; declared(params, include_missing: false) &#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -H &quot;Content-Type: application/json&quot; localhost:9292/users/signup -d &apos;&#123;&quot;user&quot;: &#123;&quot;first_name&quot;:&quot;first name&quot;, &quot;random&quot;: &quot;never shown&quot;&#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>include_missing:false时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;declared_params&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;first_name&quot;: &quot;first name&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>include_missing:true时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;declared_params&quot;: &#123;</span><br><span class="line">    &quot;first_name&quot;: &quot;first name&quot;,</span><br><span class="line">    &quot;last_name&quot;: null</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在嵌套的hash中也会生效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">format :json</span><br><span class="line"></span><br><span class="line">params do</span><br><span class="line">  requires :user, type: Hash do</span><br><span class="line">    requires :first_name, type: String</span><br><span class="line">    optional :last_name, type: String</span><br><span class="line">    requires :address, type: Hash do</span><br><span class="line">      requires :city, type: String</span><br><span class="line">      optional :region, type: String</span><br><span class="line">    end</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">post &apos;users/signup&apos; do</span><br><span class="line">  &#123; &apos;declared_params&apos; =&gt; declared(params, include_missing: false) &#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>请求：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -H &quot;Content-Type: application/json&quot; localhost:9292/users/signup -d &apos;&#123;&quot;user&quot;: &#123;&quot;first_name&quot;:&quot;first name&quot;, &quot;random&quot;: &quot;never shown&quot;, &quot;address&quot;: &#123; &quot;city&quot;: &quot;SF&quot;&#125;&#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>include_missing:false时：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;declared_params&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;first_name&quot;: &quot;first name&quot;,</span><br><span class="line">      &quot;address&quot;: &#123;</span><br><span class="line">        &quot;city&quot;: &quot;SF&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> include_missing:true时<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;declared_params&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;first_name&quot;: &quot;first name&quot;,</span><br><span class="line">      &quot;last_name&quot;: null,</span><br><span class="line">      &quot;address&quot;: &#123;</span><br><span class="line">        &quot;city&quot;: &quot;Zurich&quot;,</span><br><span class="line">        &quot;region&quot;: null</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 注意，值被设置为nil的变量和缺失是不同的，include_missing被设置为false时，值为nil的变量也会返回。<br> 请求：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -H &quot;Content-Type: application/json&quot; localhost:9292/users/signup -d &apos;&#123;&quot;user&quot;: &#123;&quot;first_name&quot;:&quot;first name&quot;, &quot;last_name&quot;: null, &quot;address&quot;: &#123; &quot;city&quot;: &quot;SF&quot;&#125;&#125;&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p> include_missing:false时的应答：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;declared_params&quot;: &#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">      &quot;first_name&quot;: &quot;first name&quot;,</span><br><span class="line">      &quot;last_name&quot;: null,</span><br><span class="line">      &quot;address&quot;: &#123; &quot;city&quot;: &quot;SF&quot;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="参数校验和强转"><a href="#参数校验和强转" class="headerlink" title="参数校验和强转"></a>参数校验和强转</h2><p>你可以通过一个params block为参数定义校验选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  requires :id, type: Integer</span><br><span class="line">  optional :text, type: String, regexp: /\A[a-z]+\z/</span><br><span class="line">  group :media do</span><br><span class="line">    requires :url</span><br><span class="line">  end</span><br><span class="line">  optional :audio do</span><br><span class="line">    requires :format, type: Symbol, values: [:mp3, :wav, :aac, :ogg], default: :mp3</span><br><span class="line">  end</span><br><span class="line">  mutually_exclusive :media, :audio</span><br><span class="line">end</span><br><span class="line">put &apos;:id&apos; do</span><br><span class="line">  # params[:id] is an Integer</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>如果指定了参数类型，在参数强转后，会对强转后的参数进行隐式的校验，以保证转换后的类型是声明的类型。（When a type is specified an implicit validation is done after the coercion to ensure the output type is the one declared.）<br>可选参数可以提供一个默认值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  optional :color, type: String, default: &apos;blue&apos;</span><br><span class="line">  optional :random_number, type: Integer, default: -&gt; &#123; Random.rand(1..100) &#125;</span><br><span class="line">  optional :non_random_number, type: Integer, default:  Random.rand(1..100)</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>注意，默认值要满足所有的校验条件，如果没有显示提供值，下面的例子总是会失败：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  optional :color, type: String, default: &apos;blue&apos;, values: [&apos;red&apos;, &apos;green&apos;]</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h3 id="支持的参数类型"><a href="#支持的参数类型" class="headerlink" title="支持的参数类型"></a>支持的参数类型</h3><ul>
+<li>Integer</li>
+<li>Float</li>
+<li>BigDecimal</li>
+<li>Numeric</li>
+<li>Date</li>
+<li>DateTime</li>
+<li>Time</li>
+<li>Boolean</li>
+<li>String</li>
+<li>Symbol</li>
+<li>Rack::Multipart::UploadedFile (alias File)</li>
+<li>JSON</li>
+</ul>
+<h3 id="自定义类型和转换"><a href="#自定义类型和转换" class="headerlink" title="自定义类型和转换"></a>自定义类型和转换</h3><p>除了上面列出的类型，如果提供了显示的转换方法parse，任何类都可以当做类型使用。如果提供的是类方法，Grape会自动使用，该方法入参必须是一个字符串，并且返回一个正确的类型，或者抛出异常表示该值无效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Color</span><br><span class="line">  attr_reader :value</span><br><span class="line">  def initialize(color)</span><br><span class="line">    @value = color</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  def self.parse(value)</span><br><span class="line">    fail &apos;Invalid color&apos; unless %w(blue red green).include?(value)</span><br><span class="line">    new(value)</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"># ...</span><br><span class="line"></span><br><span class="line">params do</span><br><span class="line">  requires :color, type: Color, default: Color.new(&apos;blue&apos;)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">get &apos;/stuff&apos; do</span><br><span class="line">  # params[:color] is already a Color.</span><br><span class="line">  params[:color].value</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>另外，通过coerce_with可以为任意类型提供自定义的转换方法，任何实现了parse或者call方法的类或对象都可以，该方法必须接受一个字符串参数，返回类型必须能够和type给出的匹配：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  requires :passwd, type: String, coerce_with: Base64.method(:decode)</span><br><span class="line">  requires :loud_color, type: Color, coerce_with: -&gt;(c) &#123; Color.parse(c.downcase) &#125;</span><br><span class="line"></span><br><span class="line">  requires :obj, type: Hash, coerce_with: JSON do</span><br><span class="line">    requires :words, type: Array[String], coerce_with: -&gt;(val) &#123; val.split(/\s+/) &#125;</span><br><span class="line">    optional :time, type: Time, coerce_with: Chronic</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>下面的例子为corece_with提供了一个lambda表达式，该表达式接受一个string类型参数，返回一个整形数组，以匹配Array[Integer]类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  requires :values, type: Array[Integer], coerce_with: -&gt;(val) &#123; val.split(/\s+/).map(&amp;:to_i) &#125;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h3 id="MultipatFile参数"><a href="#MultipatFile参数" class="headerlink" title="MultipatFile参数"></a>MultipatFile参数</h3><p>Grape利用Rack::Request内置的对MultipatFile参数的支持，这种类型的参数可以被声明为type: File：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  requires :avatar, type: File</span><br><span class="line">end</span><br><span class="line">post &apos;/&apos; do</span><br><span class="line">  # Parameter will be wrapped using Hashie:</span><br><span class="line">  params.avatar.filename # =&gt; &apos;avatar.png&apos;</span><br><span class="line">  params.avatar.type     # =&gt; &apos;image/png&apos;</span><br><span class="line">  params.avatar.tempfile # =&gt; #&lt;File&gt;</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h3 id="JSON类型"><a href="#JSON类型" class="headerlink" title="JSON类型"></a>JSON类型</h3><p>Grape支持JSON格式的复杂类型参数，使用type: JSON声明，JSON对象和数组都可以被接受，在两种情况下，内置的校验规则对所有的对象（JSON对象或JSON数组中的所有对象）都适用。（Grape supports complex parameters given as JSON-formatted strings using the special type: JSON declaration. JSON objects and arrays of objects are accepted equally, with nested validation rules applied to all objects in either case）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  requires :json, type: JSON do</span><br><span class="line">    requires :int, type: Integer, values: [1, 2, 3]</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line">get &apos;/&apos; do</span><br><span class="line">  params[:json].inspect</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"># ...</span><br><span class="line"></span><br><span class="line">client.get(&apos;/&apos;, json: &apos;&#123;&quot;int&quot;:1&#125;&apos;) # =&gt; &quot;&#123;:int=&gt;1&#125;&quot;</span><br><span class="line">client.get(&apos;/&apos;, json: &apos;[&#123;&quot;int&quot;:&quot;1&quot;&#125;]&apos;) # =&gt; &quot;[&#123;:int=&gt;1&#125;]&quot;</span><br><span class="line"></span><br><span class="line">client.get(&apos;/&apos;, json: &apos;&#123;&quot;int&quot;:4&#125;&apos;) # =&gt; HTTP 400</span><br><span class="line">client.get(&apos;/&apos;, json: &apos;[&#123;&quot;int&quot;:4&#125;]&apos;) # =&gt; HTTP 400</span><br></pre></td></tr></table></figure></p>
+<p>另外，也可以使用type: Array[JSON]，用以明确表示被传递进来的参数是一个数组，如果只传递进来的是非数组形式的单个对象，会将其转换成数组。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  requires :json, type: Array[JSON] do</span><br><span class="line">    requires :int, type: Integer</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line">get &apos;/&apos; do</span><br><span class="line">  params[:json].each &#123; |obj| ... &#125; # always works</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>For stricter control over the type of JSON structure which may be supplied, use type: Array, coerce_with: JSON or type: Hash, coerce_with: JSON.</p>
+<h3 id="允许多种类型"><a href="#允许多种类型" class="headerlink" title="允许多种类型"></a>允许多种类型</h3><p>多类型参数可以使用types来声明，而不是使用type：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  requires :status_code, types: [Integer, String, Array[Integer, String]]</span><br><span class="line">end</span><br><span class="line">get &apos;/&apos; do</span><br><span class="line">  params[:status_code].inspect</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"># ...</span><br><span class="line"></span><br><span class="line">client.get(&apos;/&apos;, status_code: &apos;OK_GOOD&apos;) # =&gt; &quot;OK_GOOD&quot;</span><br><span class="line">client.get(&apos;/&apos;, status_code: 300) # =&gt; 300</span><br><span class="line">client.get(&apos;/&apos;, status_code: %w(404 NOT FOUND)) # =&gt; [404, &quot;NOT&quot;, &quot;FOUND&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>作为一个特例，通过传递包含多个成员的Set或者Array给type,可以声明多成员类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  requires :status_codes, type: Array[Integer,String]</span><br><span class="line">end</span><br><span class="line">get &apos;/&apos; do</span><br><span class="line">  params[:status_codes].inspect</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line"># ...</span><br><span class="line"></span><br><span class="line">client.get(&apos;/&apos;, status_codes: %w(1 two)) # =&gt; [1, &quot;two&quot;]</span><br></pre></td></tr></table></figure></p>
+<h3 id="校验嵌套的参数"><a href="#校验嵌套的参数" class="headerlink" title="校验嵌套的参数"></a>校验嵌套的参数</h3><p>通过group或者为requires或者optinal提供block可以使用嵌套参数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  requires :id, type: Integer</span><br><span class="line">  optional :text, type: String, regexp: /\A[a-z]+\z/</span><br><span class="line">  group :media do</span><br><span class="line">    requires :url</span><br><span class="line">  end</span><br><span class="line">  optional :audio do</span><br><span class="line">    requires :format, type: Symbol, values: [:mp3, :wav, :aac, :ogg], default: :mp3</span><br><span class="line">  end</span><br><span class="line">  mutually_exclusive :media, :audio</span><br><span class="line">end</span><br><span class="line">put &apos;:id&apos; do</span><br><span class="line">  # params[:id] is an Integer</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>上面例子的意思是，需要同时提供<code>params[:media][:url]</code> 和 <code>params[:id]</code>，提供<code>params[:audio]</code>时才需要提供<code>params[:audio][:format]</code>。提供block时，group、requires、optional接受值可以是Array或者Hash的type（默认为Array）。Depending on the value, the nested parameters will be treated either as values of a hash or as values of hashes in an array.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  optional :preferences, type: Array do</span><br><span class="line">    requires :key</span><br><span class="line">    requires :value</span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  requires :name, type: Hash do</span><br><span class="line">    requires :first_name</span><br><span class="line">    requires :last_name</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h3 id="参数依赖"><a href="#参数依赖" class="headerlink" title="参数依赖"></a>参数依赖</h3><p>对于给定一个参数时，必须提供另一个参数的情况，可以使用given方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  optional :shelf_id, type: Integer</span><br><span class="line">  given :shelf_id do</span><br><span class="line">    requires :bin_id, type: Integer</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<p>在上面的例子中，Grape会使用blank?方法检查是否提供了shelf_id参数。<br>give也接受一个自定义的Proc，下面的例子，description参数只有在category 的值是“foo”的时候才需要提供：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">params do</span><br><span class="line">  optional :category</span><br><span class="line">  given category: -&gt;(val) &#123; val == &apos;foo&apos; &#125; do</span><br><span class="line">    requires :description</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure></p>
+<h3 id="内置的验证方法"><a href="#内置的验证方法" class="headerlink" title="内置的验证方法"></a>内置的验证方法</h3>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixinpay.png" alt="崔咩咩 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ruby/" rel="tag">#Ruby</a>
+          
+            <a href="/tags/Grape/" rel="tag">#Grape</a>
+          
+            <a href="/tags/RESTful/" rel="tag">#RESTful</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/27/Grape教程-基础知识/" rel="next" title="Grape简介">
+                <i class="fa fa-chevron-left"></i> Grape简介
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="崔咩咩" />
+          <p class="site-author-name" itemprop="name">崔咩咩</p>
+          <p class="site-description motion-element" itemprop="description">有时迷茫，不停思考，持续成长</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参数"><span class="nav-number">1.</span> <span class="nav-text">参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#声明"><span class="nav-number">1.1.</span> <span class="nav-text">声明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#包含父命名空间"><span class="nav-number">1.1.1.</span> <span class="nav-text">包含父命名空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Include-missing"><span class="nav-number">1.1.2.</span> <span class="nav-text">Include missing</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数校验和强转"><span class="nav-number">1.2.</span> <span class="nav-text">参数校验和强转</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支持的参数类型"><span class="nav-number">1.2.1.</span> <span class="nav-text">支持的参数类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义类型和转换"><span class="nav-number">1.2.2.</span> <span class="nav-text">自定义类型和转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MultipatFile参数"><span class="nav-number">1.2.3.</span> <span class="nav-text">MultipatFile参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON类型"><span class="nav-number">1.2.4.</span> <span class="nav-text">JSON类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#允许多种类型"><span class="nav-number">1.2.5.</span> <span class="nav-text">允许多种类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#校验嵌套的参数"><span class="nav-number">1.2.6.</span> <span class="nav-text">校验嵌套的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数依赖"><span class="nav-number">1.2.7.</span> <span class="nav-text">参数依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内置的验证方法"><span class="nav-number">1.2.8.</span> <span class="nav-text">内置的验证方法</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔咩咩</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Ruby,Sequel," />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="文章的概要信息。">
+<meta name="description" content="Model基础。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sequel-Model">
 <meta property="og:url" content="http://yoursite.com/2016/09/29/Sequel-Model/index.html">
 <meta property="og:site_name" content="我的自白书">
-<meta property="og:description" content="文章的概要信息。">
-<meta property="og:updated_time" content="2016-09-29T15:15:06.757Z">
+<meta property="og:description" content="Model基础。">
+<meta property="og:updated_time" content="2016-09-29T15:20:08.615Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sequel-Model">
-<meta name="twitter:description" content="文章的概要信息。">
+<meta name="twitter:description" content="Model基础。">
 
 
 
@@ -259,6 +259,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -281,7 +300,7 @@
       
 
       
-        <p>文章的概要信息。<br><a id="more"></a></p>
+        <p>Model基础。<br><a id="more"></a></p>
 <h1 id="Sequel-Model-Mass-Assignment"><a href="#Sequel-Model-Mass-Assignment" class="headerlink" title="Sequel::Model Mass Assignment"></a>Sequel::Model Mass Assignment</h1><p>大多数的Model方法接受一个包含一系列key和value的哈希作为参数，这些方法包括：Model.new, Model.create, Model#set 和 Model#update。当把hash参数传递给这些方法时，每个key后面都会添加一个=（setter方法）,如果存在setter方法且能够访问，Sequel会调用setter方法，setter的参数就是hash的value值。默认的，有两种setter方法是被限制的。第一种是类似typecast_on_assignment= 和 ==的方法，这些方法不影响列，所以不能用于mass assignment。第二种是主键的setter方法。为了使用主键的setter方法，必须为那个model调用unrestrict_primary_key：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Post.unrestrict_primary_key</span><br></pre></td></tr></table></figure></p>
 <p>默认情况下，mass assignment允许设置除了主键外的所有列，在某些时候，这会存在安全风险。Sequel有多种方式来保证mass assignment的安全性，第一种是使用set_allowed_columns：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Post.set_allowed_columns :title, :body, :category</span><br></pre></td></tr></table></figure></p>
 <p>这就明确指定了哪些方法是允许的（title=, body=, and category=），其他方法都不允许调用。在所有场景被访问的列都相同的简单应用中，这种方法很有效，但是在不同场景需要访问不同列时，这种方法就不适用了（比如，admin access vs. user access）。为了应对这种情况，可以使用set_only 或 update_only：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># user case</span><br><span class="line">post.set_only(params[:post], :title, :body)</span><br><span class="line"># admin case</span><br><span class="line">post.set_only(params[:post], :title, :body, :deleted)</span><br></pre></td></tr></table></figure></p>
@@ -290,8 +309,11 @@
 <p>set_fields/update_fields和set_only/update_only方法在实现上不同。set_only/update_only会遍历hash，检查每个尝试调用的方法是否合法；set_fields/update_fields会遍历数组，然后在hash中查找值，并调用对应的setter方法。（一个是遍历第一个参数，一个是遍历第二个参数）。<br>set_fields/update_fields被设计用于从输入中获取指定字段并忽略其他字段的场景，适用于HTML表单这种数据固定的情况。set_only/update_only被设计用于不知道输入中会包含哪些字段，但是又要确保某些setter方法能够被调用的场景，适用于灵活变动的API。<br><em>上面的含义是，set_only/update_only对第一个hash参数进行遍历，用户可能提供了title、body，也可能没提供；set_fields/update_fields对第二个数组参数进行遍历，这些参数在第一个hash参数中应该是要包含的，如果没包含，怎么办，看下面。</em><br>可以为set_fields/update_fields提供一个可选的hash参数，当前用于处理:missing选项。</p>
 <ul>
 <li>当hash是:missing=&gt;:skip时，set_fields/update_fields跳过未提供的值，这就允许这两个方法能够像set_only/update_only一样被使用了。</li>
-<li>当hash是:missing=&gt;:raise时，set_fields/update_fields会在第一个hash参数不包括指定值时抛出异常，而不是将其值设置为nil或者hash的默认值。这允许更严格的检查，类似默认mass assignment方法的:strict_param_checking设置。你可以使用Model.default_set_fields_options=方法在全局或为某个model的set_fields/update_fields设置默认的选项。<br>在所有的mass assignment场景中，以set开头的方法仅设置属性但不保存，以update开始的方法设置属性的同时会保存。<h1 id="Model校验"><a href="#Model校验" class="headerlink" title="Model校验"></a>Model校验</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2>本指南介绍如何使用Sequel::Model的校验支持。我们会解释Sequel的校验支持是如何工作的，校验是用来干什么的，以及如何使用validation_helpers 插件来为你的models增加特定类型的校验。<h2 id="为什么要校验"><a href="#为什么要校验" class="headerlink" title="为什么要校验"></a>为什么要校验</h2>Validations are primarily useful for associating error messages to display to the user with specific attributes on the model. 也可以用他们来保证模型实例的数据完整性，但并不推荐这么做，除非模型实例是修改数据库的唯一方式，或者你有复杂的数据完整性要求，以至无法通过数据库级别的限制来实现。<h2 id="数据完整性"><a href="#数据完整性" class="headerlink" title="数据完整性"></a>数据完整性</h2>数据库完整性最好由数据库本身来保证。例如，如果你有一个数据列不能包含NULL，在定义数据库时可以通过指定NOT NULL来限制。如果你有一个数据列的值只能是1-10，你可以增加一个CHECK约束来保证。如果你有一个VARCHAR列，要求长度是2-255，你可以设置VARCHAR列的长度是255，并增加一个CHECK约束来保证所有的值至少包含2个字符。<br>不幸的是，并不是所有的场景都可以像上面说的那样解决。比如，你使用Mysql并且没有数据库配置的权限，你可能尝试将一个长度为300的字符串插入到定义为VARCHAR（255）的列，此时Mysql只是截断了字符串，并不会抛出一个错误。这种情况下，增加一个model校验来保证完整性就显得很必要了。<br>另外，有些场景下你的数据库完整性要求可能很难通过数据库约束来实现，特别是你面对多种数据库类型时。<br>最后，校验比数据库约束更好写，如果时间完整性不是非常的重要，通过校验来提供最小的数据完整性可能更好。</li>
+<li>当hash是:missing=&gt;:raise时，set_fields/update_fields会在第一个hash参数不包括指定值时抛出异常，而不是将其值设置为nil或者hash的默认值。这允许更严格的检查，类似默认mass assignment方法的:strict_param_checking设置。你可以使用Model.default_set_fields_options=方法在全局或为某个model的set_fields/update_fields设置默认的选项。<br>在所有的mass assignment场景中，以set开头的方法仅设置属性但不保存，以update开始的方法设置属性的同时会保存。</li>
 </ul>
+<h1 id="Model校验"><a href="#Model校验" class="headerlink" title="Model校验"></a>Model校验</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>本指南介绍如何使用Sequel::Model的校验支持。我们会解释Sequel的校验支持是如何工作的，校验是用来干什么的，以及如何使用validation_helpers 插件来为你的models增加特定类型的校验。</p>
+<h2 id="为什么要校验"><a href="#为什么要校验" class="headerlink" title="为什么要校验"></a>为什么要校验</h2><p>Validations are primarily useful for associating error messages to display to the user with specific attributes on the model. 也可以用他们来保证模型实例的数据完整性，但并不推荐这么做，除非模型实例是修改数据库的唯一方式，或者你有复杂的数据完整性要求，以至无法通过数据库级别的限制来实现。</p>
+<h2 id="数据完整性"><a href="#数据完整性" class="headerlink" title="数据完整性"></a>数据完整性</h2><p>数据库完整性最好由数据库本身来保证。例如，如果你有一个数据列不能包含NULL，在定义数据库时可以通过指定NOT NULL来限制。如果你有一个数据列的值只能是1-10，你可以增加一个CHECK约束来保证。如果你有一个VARCHAR列，要求长度是2-255，你可以设置VARCHAR列的长度是255，并增加一个CHECK约束来保证所有的值至少包含2个字符。<br>不幸的是，并不是所有的场景都可以像上面说的那样解决。比如，你使用Mysql并且没有数据库配置的权限，你可能尝试将一个长度为300的字符串插入到定义为VARCHAR（255）的列，此时Mysql只是截断了字符串，并不会抛出一个错误。这种情况下，增加一个model校验来保证完整性就显得很必要了。<br>另外，有些场景下你的数据库完整性要求可能很难通过数据库约束来实现，特别是你面对多种数据库类型时。<br>最后，校验比数据库约束更好写，如果时间完整性不是非常的重要，通过校验来提供最小的数据完整性可能更好。</p>
 <h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>不管你使用校验来验证数据完成性还是提供错误消息，用法都是相同的。当你尝试保存一个model实例时，在发送INSERT或UPDATE请求给数据库之前，Sequel::Model会尝试调用validate来验证。如果validate方法没有为实例添加任何错误消息，就认为其实有效的，valid?方法会返回true。如果validate想对象添加了错误信息，valid?会返回false，保存操作就会抛出Sequel::ValidationFailed（默认的异常）异常，挥着返回Nil(如果raise_on_save_failure 设置为false)。<br>在发送数据库请求前进行校验，Sequel尝试保证无效的对象不会被保存到数据库中。但是，如果你在数据库中不增加同样的校验，那么非法数据可能会通过其他的方式被添加到数据库中。这样就会导致很奇怪的现象，比如，你从数据库检索出一条数据，没有做任何修改，然后尝试保存，就会抛出一个异常。</p>
 <h2 id="跳过校验"><a href="#跳过校验" class="headerlink" title="跳过校验"></a>跳过校验</h2><p>Sequel::Model使用save方法保存model对象，这就意味着所有model对象的保存都会进行校验操作。唯一跳过校验的方式是在调用save时传递一个:validate =&gt; false选项，如果使用了该选项，save方法在保存是不会再进行校验。<br>注意，可能经常出现通过dataset更新数据而不是使用save的情况，校验只会在你调用save或者其他的model方法调用save时才会进行。例如，create方法实例化一个model实例，然后调用save，所以通过create能够创建一个合法的对象。但是insert类方法只是一个dataset方法，仅仅将原始的hash数据插入到数据库中，并不对数据进行校验。</p>
 <h2 id="valid-he-validate"><a href="#valid-he-validate" class="headerlink" title="valid?he validate"></a>valid?he validate</h2><p>Sequel::Model使用valid?方法检查model实例是否合法，该方法不应该被重写，但是validate方法应该被重写用以向model中添加校验：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Album &lt; Sequel::Model</span><br><span class="line">  def validate</span><br><span class="line">    super</span><br><span class="line">    errors.add(:name, &apos;cannot be empty&apos;) if !name || name.empty?</span><br><span class="line">  end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">Album.new.valid? # false</span><br><span class="line">Album.new(:name=&gt;&apos;&apos;).valid? # false</span><br><span class="line">Album.new(:name=&gt;&apos;RF&apos;).valid? # true</span><br></pre></td></tr></table></figure></p>
@@ -408,6 +430,14 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ruby/" rel="tag">#Ruby</a>
+          
+            <a href="/tags/Sequel/" rel="tag">#Sequel</a>
+          
+        </div>
       
 
       

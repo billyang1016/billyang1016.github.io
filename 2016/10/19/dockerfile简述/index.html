@@ -1,0 +1,624 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Devops,Docker," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="dockerfile简述。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dockerfile简述">
+<meta property="og:url" content="http://yoursite.com/2016/10/19/dockerfile简述/index.html">
+<meta property="og:site_name" content="我的自白书">
+<meta property="og:description" content="dockerfile简述。">
+<meta property="og:updated_time" content="2016-10-19T14:01:33.727Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dockerfile简述">
+<meta name="twitter:description" content="dockerfile简述。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> dockerfile简述 | 我的自白书 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">我的自白书</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">寻找自己</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                dockerfile简述
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-19T22:00:48+08:00" content="2016-10-19">
+              2016-10-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>dockerfile简述。<br><a id="more"></a></p>
+<h1 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h1><p>Dockerfile的内容是一坨可以执行的代码（或者说是指令）（docker的DSL），这些代码使得创建镜像的操作可以复用以及自动化。</p>
+<h1 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h1><p>Dockerfile的指令格式很简单：<br>INSTRUCTION arguments</p>
+<p>指令是不区分大小写的，但是约定为全部大写。<br>Dockerfile中指令的书写顺序就是它们的执行顺序。</p>
+<h1 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h1><h2 id="FROM"><a href="#FROM" class="headerlink" title="FROM"></a>FROM</h2><p>Dockerfile必须以FROM指令开始，FROM指令指定了基础镜像是什么。也就是基于哪个镜像来制作自己的镜像。<br><code>FROM &lt;image name&gt;</code><br>image name的格式一般为”image:tag”</p>
+<h2 id="MAINTAINER"><a href="#MAINTAINER" class="headerlink" title="MAINTAINER"></a>MAINTAINER</h2><p>指定镜像的作者信息：<br><code>MAINTAINER &lt;author name&gt;</code></p>
+<h2 id="RUN"><a href="#RUN" class="headerlink" title="RUN"></a>RUN</h2><p>在shell或者exec的环境下执行的命令。RUN指令会在新创建的镜像上添加新的层面，接下来提交的结果用在Dockerfile的下一条指令中。<br><code>RUN &lt;command&gt;</code></p>
+<h2 id="ADD和COPY"><a href="#ADD和COPY" class="headerlink" title="ADD和COPY"></a>ADD和COPY</h2><p>复制文件指令。<br><code>ADD &lt;source&gt; &lt;destination&gt;</code><br>source可以是URL或者是启动配置上下文中的一个文件。<br>将文件<source>拷贝到container的文件系统对应的路径<destination><br>所有拷贝到container中的文件和文件夹权限为0755,uid和gid为0<br>如果文件是可识别的压缩格式，则docker会帮忙解压缩。</destination></p>
+<ul>
+<li>如果要ADD本地文件，则本地文件必须在 docker build <path></path>，指定的<path></path>目录下</li>
+<li>如果要ADD远程文件，则远程文件必须在 docker build <path></path>，指定的<path></path>目录下。比如:<br><code>docker build github.com/creack/docker-firefox</code><br>docker-firefox目录下必须有Dockerfile和要ADD的文件。</li>
+</ul>
+<p>COPY指令功能类似，但是COPY不允许source是URL，同时也不会进行解压。</p>
+<h2 id="CMD和ENTRYPOINT"><a href="#CMD和ENTRYPOINT" class="headerlink" title="CMD和ENTRYPOINT"></a>CMD和ENTRYPOINT</h2><p>提供了容器默认的执行命令。 Dockerfile只允许使用一次CMD/ENTRYPOINT指令。 使用多个CMD/ENTRYPOINT会抵消之前所有的指令，只有最后一个指令生效。 CMD有三种形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMD [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;] (exec form, this is the preferred form)</span><br><span class="line">CMD command param1 param2 (shell form)</span><br><span class="line">CMD [&quot;param1&quot;,&quot;param2&quot;] (as default parameters to ENTRYPOINT)</span><br></pre></td></tr></table></figure></p>
+<p>区别：<br>第二种方式会以”/bin/sh -c”形式调用。第三种方式是为ENTRYPOINT指定参数，也就是使用第三种形式时，要有一个ENTRYPOINT指令。</p>
+<p><strong>如果在执行docker run时提供了command，且command和CMD中相同(参数可以不同)，则会执行command，不执行CMD中的命令（实际含义就是把CMD中传递param覆盖了）。</strong></p>
+<p>ENTRYPOINT（An ENTRYPOINT allows you to configure a container that will run as an executable）有两种格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;,&quot;param2&quot;] (exec form)</span><br><span class="line">ENTRYPOINT command param1 param2 (shell form)</span><br></pre></td></tr></table></figure></p>
+<p>区别：<br>第二种(shell form)会屏蔽掉docker run时后面加的命令和CMD里的参数；第一种会把docker run后面的参数或CMD里的参数追加给ENTRYPOINT，docker run后面的参数会覆盖掉CMD里的参数。</p>
+<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">ENTRYPOINT [&quot;echo&quot;, &quot;param1&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>执行<br><code>docker run -it test param2</code><br>显示<code>param1 param2</code><br>如果是shell form形式，docker run提供的参数就无效。</p>
+<h3 id="两者区别"><a href="#两者区别" class="headerlink" title="两者区别"></a>两者区别</h3><p>ENTRYPOINT和CMD的不同点在于执行docker run时参数传递方式，CMD指定的命令可以被docker run传递的命令覆盖，例如，如果用CMD指定：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">CMD [&quot;echo&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>然后运行<br><code>docker run CONTAINER_NAME echo foo</code><br>那么CMD里指定的echo会被新指定的echo覆盖，所以最终相当于运行echo foo，所以最终打印出的结果就是：<br><code>foo</code><br>而ENTRYPOINT会把容器名后面的所有内容都当成参数传递给其指定的命令（不会对命令覆盖），比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">ENTRYPOINT [&quot;echo&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>然后运行<br><code>docker run CONTAINER_NAME echo foo</code><br>则CONTAINER_NAME后面的<code>echo foo</code>都作为参数传递给ENTRYPOING里指定的echo命令了，所以相当于执行了<br><code>echo &quot;echo foo&quot;</code><br>最终打印出的结果就是：<br><code>echo foo</code><br>另外，在Dockerfile中，ENTRYPOINT指定的参数比运行docker run时指定的参数更靠前，比如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">ENTRYPOINT [&quot;echo&quot;, &quot;foo&quot;]</span><br></pre></td></tr></table></figure></p>
+<p>执行<br><code>docker run CONTAINER_NAME bar</code><br>相当于执行了：<br><code>echo foo bar</code><br>打印出的结果就是：<br><code>foo bar</code></p>
+<h2 id="EXPOSE"><a href="#EXPOSE" class="headerlink" title="EXPOSE"></a>EXPOSE</h2><p>指定容器在运行时监听的端口。<br><code>EXPOSE &lt;port&gt; [&lt;port&gt;...]</code><br>该指令会将容器中的端口映射成宿主机器中的某个端口。当你需要访问容器的时候，可以不使用容器的IP地址而是使用宿主机器的IP地址和映射后的端口。要完成整个操作需要两个步骤:</p>
+<ul>
+<li>首先在Dockerfile使用EXPOSE设置需要映射的容器端口;</li>
+<li>然后在运行容器的时候指定-p选项加上EXPOSE设置的端口，这样EXPOSE设置的端口号会被随机映射成宿主机器中的一个端口号。也可以指定需要映射到宿主机器的那个端口，这时要确保宿主机器上的端口号没有被使用。<br>EXPOSE指令可以一次设置多个端口号，相应的运行容器的时候，可以配套的多次使用-p选项。</li>
+</ul>
+<h2 id="WORKDIR"><a href="#WORKDIR" class="headerlink" title="WORKDIR"></a>WORKDIR</h2><p>切换目录用，可以多次切换(相当于cd命令)，对RUN,CMD,ENTRYPOINT生效。<br><code>WORKDIR /path/to/workdir</code></p>
+<h2 id="ENV"><a href="#ENV" class="headerlink" title="ENV"></a>ENV</h2><p>设置环境变量。<br><code>ENV &lt;key&gt; &lt;value&gt;</code><br>如果不指定value，表示清除key环境变量。</p>
+<h2 id="USER"><a href="#USER" class="headerlink" title="USER"></a>USER</h2><p>使用哪个用户跑container：<br><code>USER &lt;uid&gt;</code></p>
+<h2 id="VOLUME"><a href="#VOLUME" class="headerlink" title="VOLUME"></a>VOLUME</h2><p>授权访问从容器内到主机上的目录。语法如下：<br><code>VOLUME [&quot;/data&quot;]</code></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="https://docs.docker.com/engine/reference/builder/" target="_blank" rel="external">Dockerfile reference</a><br><a href="http://dockone.io/article/103" target="_blank" rel="external">Docker入门教程（三）Dockerfile</a><br><a href="https://my.oschina.net/2xixi/blog/516951" target="_blank" rel="external">Docker Dockerfile详解</a><br><a href="http://blog.csdn.net/we_shell/article/details/38445979" target="_blank" rel="external">Docker学习笔记（3）– 如何使用Dockerfile构建镜像</a><br><a href="https://segmentfault.com/q/1010000000417103" target="_blank" rel="external">Dockerfile里指定执行命令用ENTRYPOING和用CMD有何不同？</a><br><a href="http://stackoverflow.com/questions/24958140/what-is-the-difference-between-the-copy-and-add-commands-in-a-dockerfile" target="_blank" rel="external">What is the difference between the <code>COPY</code> and <code>ADD</code> commands in a Dockerfile?</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div></div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixinpay.png" alt="崔咩咩 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Devops/" rel="tag">#Devops</a>
+          
+            <a href="/tags/Docker/" rel="tag">#Docker</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/29/Sequel-Model/" rel="next" title="Sequel-Model">
+                <i class="fa fa-chevron-left"></i> Sequel-Model
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="崔咩咩" />
+          <p class="site-author-name" itemprop="name">崔咩咩</p>
+          <p class="site-description motion-element" itemprop="description">有时迷茫，不停思考，持续成长</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#作用"><span class="nav-number">1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指令格式"><span class="nav-number">2.</span> <span class="nav-text">指令格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指令"><span class="nav-number">3.</span> <span class="nav-text">指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FROM"><span class="nav-number">3.1.</span> <span class="nav-text">FROM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAINTAINER"><span class="nav-number">3.2.</span> <span class="nav-text">MAINTAINER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RUN"><span class="nav-number">3.3.</span> <span class="nav-text">RUN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ADD和COPY"><span class="nav-number">3.4.</span> <span class="nav-text">ADD和COPY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD和ENTRYPOINT"><span class="nav-number">3.5.</span> <span class="nav-text">CMD和ENTRYPOINT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两者区别"><span class="nav-number">3.5.1.</span> <span class="nav-text">两者区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXPOSE"><span class="nav-number">3.6.</span> <span class="nav-text">EXPOSE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WORKDIR"><span class="nav-number">3.7.</span> <span class="nav-text">WORKDIR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENV"><span class="nav-number">3.8.</span> <span class="nav-text">ENV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#USER"><span class="nav-number">3.9.</span> <span class="nav-text">USER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VOLUME"><span class="nav-number">3.10.</span> <span class="nav-text">VOLUME</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">4.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">崔咩咩</span>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
